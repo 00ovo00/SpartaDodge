@@ -91,6 +91,13 @@ public class HealthSystem : MonoBehaviour
 
     private void CallDeath()
     {
-        OnDeath?.Invoke();
+        if (gameObject.CompareTag("Enemy"))
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            OnDeath?.Invoke();
+        }
     }
 }
