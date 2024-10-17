@@ -4,6 +4,8 @@ using System.Collections;
 
 public class CharacterStatHandler : MonoBehaviour
 {
+    private float maxSpeed = 20.0f;
+
     // 기본 스탯과 버프 스탯들의 능력치를 종합해서 스탯을 계산하는 컴포넌트
     [SerializeField] private CharacterStat baseStats;
     public CharacterStat CurrentStat { get; private set; }
@@ -46,6 +48,7 @@ public class CharacterStatHandler : MonoBehaviour
                     CurrentStat.speed = modifier.speed;
                     break;
             }
+            CurrentStat.speed = (CurrentStat.speed > maxSpeed) ? maxSpeed : CurrentStat.speed;
         }
     }
 
