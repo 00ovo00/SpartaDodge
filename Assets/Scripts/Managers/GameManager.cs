@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     {
         // 하나만 생성되도록 관리
         if (Instance != null) Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
         Instance = this;
         Player = GameObject.FindGameObjectWithTag(playerTag).transform;
 
