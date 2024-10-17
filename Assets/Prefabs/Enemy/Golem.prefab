@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: 2383405233882923700}
   - component: {fileID: 3742161279463310759}
   m_Layer: 6
-  m_Name: Bat
+  m_Name: Golem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -162,7 +162,7 @@ MonoBehaviour:
     statsChangeType: 2
     maxHealth: 3
     speed: 2
-    attackSO: {fileID: 11400000, guid: 4ec109c1b4571864ab359d784ac31b86, type: 2}
+    attackSO: {fileID: 11400000, guid: 269bd56b52234a4418737104a8b98ace, type: 2}
   statsModifiers: []
 --- !u!114 &5364292822843209878
 MonoBehaviour:
@@ -315,7 +315,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5122214963031183224}
@@ -361,7 +361,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 7013631516640934163, guid: b438465a32eb63243a7889eb1f400d29, type: 3}
+  m_Sprite: {fileID: 4628221225906215552, guid: 6946cd59d8c7e234f851a23d8ce98454, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -382,7 +382,7 @@ Animator:
   m_GameObject: {fileID: 9210056963611756660}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2b2a5f6269e54734da5ae60e0793a6a1, type: 2}
+  m_Controller: {fileID: 9100000, guid: e437c4e48004695459598ce67d32e75a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

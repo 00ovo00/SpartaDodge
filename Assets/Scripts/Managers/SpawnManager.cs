@@ -16,6 +16,7 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] private GameObject bat;
     [SerializeField] private GameObject crab;
+    [SerializeField] private GameObject golem;
 
 
     private void Start()
@@ -26,12 +27,10 @@ public class SpawnManager : MonoBehaviour
         AddPool("Bat", bat, 20);
         UpdateArray();
         SpawnHandlerByKillCount(20);
+        SpawnHandlerByKillCount(50);
 
     }
-    private void Awake()
-    {
-        
-    }
+    
     private void Update()
     {
         Spawn();
@@ -60,6 +59,11 @@ public class SpawnManager : MonoBehaviour
         {
             case 20:
                 AddPool("Crab", crab, 20);
+                UpdateArray();
+                break;
+
+            case 50:
+                AddPool("Golem", golem, 20);
                 UpdateArray();
                 break;
 

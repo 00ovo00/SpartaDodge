@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7a094e8177512a4ab7fca5ea99a1cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followRange: 15
+  followRange: 30
   shootRange: 10
 --- !u!114 &4399593267319375578
 MonoBehaviour:
