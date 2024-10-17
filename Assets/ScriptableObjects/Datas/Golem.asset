@@ -28,3 +28,4 @@ MonoBehaviour:
   numberofProjectilesPerShot: 4
   multipleProjectilesAngel: 80
   projectileColor: {r: 1, g: 1, b: 1, a: 0.60784316}
+  particleSystem: {fileID: 9198164191775281119, guid: 3dfcc67907701f04e8d29171184c132d, type: 3}

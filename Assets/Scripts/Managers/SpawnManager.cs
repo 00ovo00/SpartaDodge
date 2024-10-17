@@ -24,7 +24,7 @@ public class SpawnManager : MonoBehaviour
 
         objectPool = GetComponent<ObjectPool>();
         spawnPointArray = GameObject.FindGameObjectsWithTag("SpawnPoint");
-        AddPool("Bat", bat, 20);
+        AddPool("Bat", bat, 10);
         UpdateArray();
         SpawnHandlerByKillCount(20);
         SpawnHandlerByKillCount(50);

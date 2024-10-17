@@ -11,4 +11,13 @@ public class RangedAttackSO : AttackSO
     public int numberofProjectilesPerShot;
     public float multipleProjectilesAngel;
     public Color projectileColor;
+    public ParticleSystem particleSystem;
+
+
+
 }
+    
+
+
+
+    

@@ -108,7 +108,14 @@ public class ProjectileController : MonoBehaviour
     {
         if (createFx)
         {
-            // TODO : ParticleSystem에 대해서 배우고, 무기 NameTag로 해당하는 FX가져오기
+            if (createFx && attackData != null && attackData.particleSystem != null)
+            {
+                // 파티클 시스템을 인스턴스화하고 위치 설정
+                ParticleSystem instantiatedFx = Instantiate(attackData.particleSystem, position, Quaternion.identity);
+                instantiatedFx.Play(); // 파티클 재생
+                Destroy(instantiatedFx.gameObject, instantiatedFx.main.duration); // 파티클이 재생된 후 삭제
+            }
+            gameObject.SetActive(false); // 투사체 비활성화
         }
         gameObject.SetActive(false);
     }
