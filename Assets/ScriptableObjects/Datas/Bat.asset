@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16482f28541d5ad49b5bb4ac41338136, type: 3}
-  m_Name: Orc_Shaman_RangedAttackData
+  m_Name: Bat
   m_EditorClassIdentifier: 
   size: 0.5
-  delay: 1
+  delay: 2
   power: 1
   speed: 10
   target:
@@ -22,9 +22,9 @@ MonoBehaviour:
   isOnKnockback: 1
   knockbackPower: 5
   knockbackTime: 0.1
-  bulletNameTag: Arrow
+  bulletNameTag: Slime
   duration: 5
   spread: 8
   numberofProjectilesPerShot: 1
   multipleProjectilesAngel: 7
-  projectileColor: {r: 0.98490566, g: 0.020441417, b: 0.020441417, a: 0.60784316}
+  projectileColor: {r: 1, g: 1, b: 1, a: 0.60784316}

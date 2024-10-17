@@ -17,25 +17,30 @@ public class ObjectPool : MonoBehaviour
 
     private void Awake()
     {
-        // 인스펙터창의 Pools를 바탕으로 오브젝트풀을 만들 것. 
-        // 오브젝트풀은 오브젝트마다 따로이며, pool개수를 넘어가면 강제로 끄고 새로운 오브젝트에게 할당.
         PoolDictionary = new Dictionary<string, Queue<GameObject>>();
+        InitializePools();
+    }
+
+    private void InitializePools()
+    {
         foreach (var pool in Pools)
         {
-            // 큐는 FIFO(First-in First-out) 구조로서, 줄을 서는 것처럼 가장 오래 줄 선(enqueue) 객체가 가장 먼저 빠져 나올(dequeue) 수 있는 구조
-            Queue<GameObject> objectPool = new Queue<GameObject>();
-            for (int i = 0; i < pool.size; i++)
-            {
-                // Awake하는 순간 오브젝트풀에 들어갈 Instantitate 일어나기 때문에 터무니없는 사이즈 조심
-                GameObject obj = Instantiate(pool.prefab, transform);
-                obj.SetActive(false);
-                // 줄의 가장 마지막에 세움.
-                objectPool.Enqueue(obj);
-            }
-            // 접근이 편한 Dictionary에 등록
-            PoolDictionary.Add(pool.tag, objectPool);
+            CreatePool(pool.tag, pool.prefab, pool.size);
         }
     }
+
+    public void CreatePool(string tag, GameObject prefab, int size)
+    {
+        Queue<GameObject> objectPool = new Queue<GameObject>();
+        for (int i = 0; i < size; i++)
+        {
+            GameObject obj = Instantiate(prefab, transform);
+            obj.SetActive(false);
+            objectPool.Enqueue(obj);
+        }
+        PoolDictionary.Add(tag, objectPool);
+    }
+
 
     public GameObject SpawnFromPool(string tag)
     {
