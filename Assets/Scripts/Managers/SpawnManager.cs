@@ -15,21 +15,22 @@ public class SpawnManager : MonoBehaviour
     
 
     [SerializeField] private GameObject bat;
+    [SerializeField] private GameObject crab;
+    [SerializeField] private GameObject golem;
+
 
     private void Start()
     {
 
         objectPool = GetComponent<ObjectPool>();
         spawnPointArray = GameObject.FindGameObjectsWithTag("SpawnPoint");
-        AddPool("Bat", bat, 20);
-        poolNameArray = objectPool.poolNameArray;
-
+        AddPool("Bat", bat, 10);
+        UpdateArray();
+        SpawnHandlerByKillCount(20);
+        SpawnHandlerByKillCount(50);
 
     }
-    private void Awake()
-    {
-        
-    }
+    
     private void Update()
     {
         Spawn();
@@ -38,7 +39,6 @@ public class SpawnManager : MonoBehaviour
     public void Spawn()
     {
         lastSpawnTime += Time.deltaTime;
-        //Debug.Log(lastSpawnTime);
 
         if (lastSpawnTime < spawnTime) return;
 
@@ -53,9 +53,21 @@ public class SpawnManager : MonoBehaviour
 
     }
 
-    private void SpawnHandlerByKillCount()
+    private void SpawnHandlerByKillCount(int killCount)
     {
+        switch(killCount)
+        {
+            case 20:
+                AddPool("Crab", crab, 20);
+                UpdateArray();
+                break;
 
+            case 50:
+                AddPool("Golem", golem, 20);
+                UpdateArray();
+                break;
+
+        }
 
     }
 
@@ -64,6 +76,7 @@ public class SpawnManager : MonoBehaviour
         if (poolNameArray == null || poolNameArray.Length == 0) return null;
 
         int randomIndex = Random.Range(0, poolNameArray.Length);
+        Debug.Log(randomIndex);
         return poolNameArray[randomIndex];
 
     }
@@ -73,5 +86,13 @@ public class SpawnManager : MonoBehaviour
         objectPool.CreatePool(tag, prefab, size);
 
     }
+
+    private void UpdateArray()
+    {
+        poolNameArray = objectPool.poolNameArray;
+        
+    }
+
+  
   
 }
