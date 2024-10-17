@@ -5,7 +5,7 @@ public class DataManager : MonoBehaviour
     public static DataManager Instance;
 
     private int killCount = 0;
-
+    private float score = 0.0f;
 
     private void Awake()
     {
@@ -28,5 +28,15 @@ public class DataManager : MonoBehaviour
     public int GetKillCount()
     {
         return killCount;
+    }
+    public void IncrementScore(float maxHp)
+    {
+        score += maxHp * 0.5f;
+        Debug.Log($"Score: {score}");
+    }
+
+    public float GetScore()
+    {
+        return score;
     }
 }
