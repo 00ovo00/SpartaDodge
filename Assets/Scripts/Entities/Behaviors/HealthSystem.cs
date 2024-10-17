@@ -59,7 +59,19 @@ public class HealthSystem : MonoBehaviour
         // CurrentHealth = CurrentHealth > MaxHealth ? MaxHealth : CurrentHealth;
         // CurrentHealth = CurrentHealth < 0 ? 0 : CurrentHealth; 와 같아요!
 
-        if (CurrentHealth <= 0f)
+        // 플레이어 체력 콘솔 출력으로 확인
+        // TODO : UI에서 확인하도록 수정
+        if (gameObject.name == "Character")
+            Debug.Log(CurrentHealth);
+
+        // 플레이어 체력이 0 이하면 게임 오버 호출
+        if (gameObject.CompareTag("Player") && CurrentHealth <= 0f)
+        {
+            GameManager.Instance.GameOver();
+            return true;
+        }
+        // 적 체력이 0 이하면 사망 이벤트 호출 
+        if (CurrentHealth <= 0f && gameObject.CompareTag("Enemy"))
         {
             CallDeath();
             return true;
