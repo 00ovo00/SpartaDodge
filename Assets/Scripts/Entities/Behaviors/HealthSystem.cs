@@ -6,6 +6,7 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private float healthChangeDelay = 0.5f;    // 무적 시간
 
     private CharacterStatHandler statsHandler;
+    private ItemDropManager itemDropManager;
     private float timeSinceLastChange = float.MaxValue; // 마지막 공격을 받고 경과한 시간
     private bool isAttacked = false;
 
@@ -24,6 +25,7 @@ public class HealthSystem : MonoBehaviour
     private void Awake()
     {
         statsHandler = GetComponent<CharacterStatHandler>();
+        itemDropManager = GetComponent<ItemDropManager>();
     }
 
     private void Start()
@@ -62,7 +64,7 @@ public class HealthSystem : MonoBehaviour
         // 플레이어 체력 콘솔 출력으로 확인
         // TODO : UI에서 확인하도록 수정
         if (gameObject.name == "Character")
-            Debug.Log(CurrentHealth);
+            Debug.Log($"PlayerHP : {CurrentHealth}");
 
         // 플레이어 체력이 0 이하면 게임 오버 호출
         if (gameObject.CompareTag("Player") && CurrentHealth <= 0f)
@@ -92,13 +94,6 @@ public class HealthSystem : MonoBehaviour
 
     private void CallDeath()
     {
-        if (gameObject.CompareTag("Enemy"))
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            OnDeath?.Invoke();
-        }
+        OnDeath?.Invoke();
     }
 }
