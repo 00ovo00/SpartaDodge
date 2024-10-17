@@ -7,7 +7,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Bat_Idle
+  m_Name: Crab_Idle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: e6d126e6425620b4b911de1a35774669, type: 2}
+  m_Motion: {fileID: 7400000, guid: 4a829a3b6e3de994984ad662838f0250, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -289,7 +289,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Bat_Hit
+  m_Name: Crab_Hit
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -368,7 +368,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Bat_Attack
+  m_Name: Crab_Attack
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -382,7 +382,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: f041f3c6966a8e946b4528b7031c9e62, type: 2}
+  m_Motion: {fileID: 7400000, guid: aed3577331d4bc3459fdfa0709a7e5c1, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
