@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public ObjectPool ObjectPool { get; private set; }
     [SerializeField] private string playerTag = "Player";
 
+    private bool isGameOver = false;
+
     private void Awake()
     {
         // 하나만 생성되도록 관리
@@ -17,5 +19,13 @@ public class GameManager : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag(playerTag).transform;
 
         ObjectPool = GetComponent<ObjectPool>();
+    }
+    public void GameOver()
+    {
+        if (isGameOver) return;
+        isGameOver = true;
+
+        Time.timeScale = 0.0f;
+        Debug.Log("GameOver");
     }
 }

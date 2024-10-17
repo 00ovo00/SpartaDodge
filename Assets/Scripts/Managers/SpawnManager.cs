@@ -38,7 +38,7 @@ public class SpawnManager : MonoBehaviour
     public void Spawn()
     {
         lastSpawnTime += Time.deltaTime;
-        Debug.Log(lastSpawnTime);
+        //Debug.Log(lastSpawnTime);
 
         if (lastSpawnTime < spawnTime) return;
 
@@ -71,7 +71,7 @@ public class SpawnManager : MonoBehaviour
     private void AddPool(string tag, GameObject prefab, int size)
     {
         objectPool.CreatePool(tag, prefab, size);
-        
+
     }
   
 }
