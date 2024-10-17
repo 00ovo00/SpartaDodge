@@ -80,6 +80,7 @@ public class HealthSystem : MonoBehaviour
         if (change >= 0)
         {
             OnHeal?.Invoke();
+            Debug.Log("데미지입음");
         }
         else
         {
