@@ -51,6 +51,7 @@ public class HealthSystem : MonoBehaviour
         // 무적 시간에는 체력이 닳지 않음
         if (timeSinceLastChange < healthChangeDelay)
         {
+            Debug.Log("무적시간");
             return false;
         }
 
@@ -74,8 +75,10 @@ public class HealthSystem : MonoBehaviour
         }
         // 적 체력이 0 이하면 사망 이벤트 호출 
         if (CurrentHealth <= 0f && gameObject.CompareTag("Enemy"))
-        {
+       {
             CallDeath();
+            CurrentHealth = MaxHealth;
+            Debug.Log(CurrentHealth);
             return true;
         }
 
@@ -96,4 +99,11 @@ public class HealthSystem : MonoBehaviour
     {
         OnDeath?.Invoke();
     }
+
+    private void OnEnable()
+    {
+        timeSinceLastChange = float.MaxValue;
+    }
+
+
 }

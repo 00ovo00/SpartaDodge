@@ -53,16 +53,22 @@ public class SpawnManager : MonoBehaviour
 
     }
 
-    private void SpawnHandlerByKillCount(int killCount)
+    private void SpawnHandlerByKillCount(int killCount)  // 리팩토링 예정
     {
+
+        Debug.Log(killCount);
         switch(killCount)
         {
             case 20:
+                if (objectPool.PoolDictionary.ContainsKey("Crab")) return;
+
                 AddPool("Crab", crab, 10);
                 UpdateArray();
                 break;
 
             case 50:
+                if (objectPool.PoolDictionary.ContainsKey("Golem")) return;
+
                 AddPool("Golem", golem, 10);
                 UpdateArray();
                 break;
