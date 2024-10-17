@@ -9,45 +9,48 @@ public class SpawnManager : MonoBehaviour
 {
     private GameObject[] spawnPointArray;
     private ObjectPool objectPool;
-    [SerializeField] private float spawnTime = 2;
+    [SerializeField] private float spawnTime = 4;
     private string[] poolNameArray;
     private float lastSpawnTime = 0f;
+    
 
-   
     [SerializeField] private GameObject bat;
 
-    private void Awake()
+    private void Start()
     {
-     
+
         objectPool = GetComponent<ObjectPool>();
         spawnPointArray = GameObject.FindGameObjectsWithTag("SpawnPoint");
-        objectPool.CreatePool("Bat", bat, 20);
-        poolNameArray = new string[objectPool.Pools.Count];
-        for (int i = 0; i < objectPool.Pools.Count; i++)
-        {
-            poolNameArray[i] = objectPool.Pools[i].tag;
-            Debug.Log(poolNameArray[i]);
+        AddPool("Bat", bat, 20);
+        poolNameArray = objectPool.poolNameArray;
 
-        }
-    
+
     }
-
-    private void Update()
+    private void Awake()
     {
         
+    }
+    private void Update()
+    {
+        Spawn();
     }
 
     public void Spawn()
     {
         lastSpawnTime += Time.deltaTime;
+        Debug.Log(lastSpawnTime);
 
         if (lastSpawnTime < spawnTime) return;
-        
+
+        string currentSelectedPool = SelectRandomPool();
+
         int randomIndex = Random.Range(0, spawnPointArray.Length);
 
+        objectPool.SpawnFromPool(currentSelectedPool, spawnPointArray[randomIndex]);
+
         lastSpawnTime = 0f;
-       
-       
+
+
     }
 
     private void SpawnHandlerByKillCount()
@@ -56,11 +59,19 @@ public class SpawnManager : MonoBehaviour
 
     }
 
-    public string RandomSpawnPrefabs()
+    public string SelectRandomPool()
     {
+        if (poolNameArray == null || poolNameArray.Length == 0) return null;
+
         int randomIndex = Random.Range(0, poolNameArray.Length);
         return poolNameArray[randomIndex];
 
     }
 
+    private void AddPool(string tag, GameObject prefab, int size)
+    {
+        objectPool.CreatePool(tag, prefab, size);
+        
+    }
+  
 }
