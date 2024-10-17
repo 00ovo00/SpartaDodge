@@ -26,14 +26,14 @@ public class SpawnManager : MonoBehaviour
         spawnPointArray = GameObject.FindGameObjectsWithTag("SpawnPoint");
         AddPool("Bat", bat, 10);
         UpdateArray();
-        SpawnHandlerByKillCount(20);
-        SpawnHandlerByKillCount(50);
+   
 
     }
     
     private void Update()
     {
         Spawn();
+        SpawnHandlerByKillCount(DataManager.Instance.GetKillCount());
     }
 
     public void Spawn()
@@ -58,12 +58,12 @@ public class SpawnManager : MonoBehaviour
         switch(killCount)
         {
             case 20:
-                AddPool("Crab", crab, 20);
+                AddPool("Crab", crab, 10);
                 UpdateArray();
                 break;
 
             case 50:
-                AddPool("Golem", golem, 20);
+                AddPool("Golem", golem, 10);
                 UpdateArray();
                 break;
 
