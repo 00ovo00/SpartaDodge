@@ -15,6 +15,8 @@ public class SpawnManager : MonoBehaviour
     
 
     [SerializeField] private GameObject bat;
+    [SerializeField] private GameObject crab;
+
 
     private void Start()
     {
@@ -53,9 +55,15 @@ public class SpawnManager : MonoBehaviour
 
     }
 
-    private void SpawnHandlerByKillCount()
+    private void SpawnHandlerByKillCount(int killCount)
     {
+        switch(killCount)
+        {
+            case 20:
+                AddPool("Crab", crab, 20);
+                break;
 
+        }
 
     }
 
@@ -73,5 +81,7 @@ public class SpawnManager : MonoBehaviour
         objectPool.CreatePool(tag, prefab, size);
         
     }
+
+  
   
 }
