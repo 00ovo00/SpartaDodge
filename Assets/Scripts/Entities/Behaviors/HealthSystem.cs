@@ -25,12 +25,12 @@ public class HealthSystem : MonoBehaviour
     private void Awake()
     {
         statsHandler = GetComponent<CharacterStatHandler>();
-        itemDropManager = GetComponent<ItemDropManager>();
     }
 
     private void Start()
     {
         CurrentHealth = MaxHealth;
+        
     }
 
     private void Update()

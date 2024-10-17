@@ -5,7 +5,7 @@ public class ItemDropManager : MonoBehaviour
 {
     public GameObject itemPrefab; // 드랍할 아이템 프리팹
     public ItemSO[] possibleItems; // 드랍 가능한 아이템 목록
-    public float dropChance = 0.5f; // 아이템 드랍 확률
+    public float dropChance = 1f; // 아이템 드랍 확률
 
     public void DropItem(Vector3 dropPosition)
     {

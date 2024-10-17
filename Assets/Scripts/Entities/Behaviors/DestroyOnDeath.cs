@@ -13,6 +13,7 @@ public class DestroyOnDeath : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         // 실제 실행 주체는 healthSystem임
         healthSystem.OnDeath += OnDeath;
+        itemDropManager = FindObjectOfType<ItemDropManager>();
     }
 
     void OnDeath()
@@ -24,6 +25,6 @@ public class DestroyOnDeath : MonoBehaviour
         // 킬카운트 증가
         DataManager.Instance.IncrementKillCount();
         //// 적의 위치에서 아이템 드랍
-        //itemDropManager.DropItem(transform.position); 
+        itemDropManager.DropItem(transform.position); 
     }
 }
