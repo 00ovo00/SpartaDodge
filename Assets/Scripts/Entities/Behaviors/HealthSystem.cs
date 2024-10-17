@@ -6,7 +6,6 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private float healthChangeDelay = 0.5f;    // 무적 시간
 
     private CharacterStatHandler statsHandler;
-    private ItemDropManager itemDropManager;
     private float timeSinceLastChange = float.MaxValue; // 마지막 공격을 받고 경과한 시간
     private bool isAttacked = false;
 
@@ -98,6 +97,7 @@ public class HealthSystem : MonoBehaviour
     private void CallDeath()
     {
         OnDeath?.Invoke();
+        DataManager.Instance.IncrementScore(MaxHealth);
     }
 
     private void OnEnable()
