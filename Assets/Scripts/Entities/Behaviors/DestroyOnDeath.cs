@@ -3,12 +3,14 @@ using UnityEngine;
 public class DestroyOnDeath : MonoBehaviour
 {
     private HealthSystem healthSystem;
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D rb2d;
+
+    private ItemDropManager itemDropManager;
 
     private void Start()
     {
         healthSystem = GetComponent<HealthSystem>();
-        rigidbody = GetComponent<Rigidbody2D>();
+        rb2d = GetComponent<Rigidbody2D>();
         // 실제 실행 주체는 healthSystem임
         healthSystem.OnDeath += OnDeath;
     }
@@ -16,7 +18,7 @@ public class DestroyOnDeath : MonoBehaviour
     void OnDeath()
     {
         // 멈추도록 수정
-        rigidbody.velocity = Vector3.zero;
+        rb2d.velocity = Vector3.zero;
 
         // 약간 반투명한 느낌으로 변경
         foreach (SpriteRenderer renderer in transform.GetComponentsInChildren<SpriteRenderer>())
@@ -35,5 +37,8 @@ public class DestroyOnDeath : MonoBehaviour
 
         // 2초뒤에 파괴
         Destroy(gameObject, 2f);
+
+        // 적의 위치에서 아이템 드랍
+        itemDropManager.DropItem(transform.position); 
     }
 }
