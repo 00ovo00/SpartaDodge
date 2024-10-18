@@ -4,6 +4,8 @@ public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
 
+    private PlayerInfoUI playerInfoUI;
+
     private int killCount = 0;
     private float score = 0.0f;
 
@@ -17,6 +19,8 @@ public class DataManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         Instance = this;
+
+        playerInfoUI = FindObjectOfType<PlayerInfoUI>();
     }
 
     public void IncrementKillCount()
@@ -32,7 +36,7 @@ public class DataManager : MonoBehaviour
     public void IncrementScore(float maxHp)
     {
         score += maxHp * 0.5f;
-        Debug.Log($"Score: {score}");
+        playerInfoUI.UpdateScore(score);
     }
 
     public float GetScore()
