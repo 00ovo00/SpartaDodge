@@ -1,11 +1,11 @@
+using System;
 using UnityEngine;
 
 public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
-
     private PlayerInfoUI playerInfoUI;
-
+    public event Action<int> OnKillCountChanged;
     private int killCount = 0;
     private float score = 0.0f;
 
@@ -27,6 +27,7 @@ public class DataManager : MonoBehaviour
     {
         killCount++;
         Debug.Log($"KillCount: {killCount}");
+        OnKillCountChanged?.Invoke(killCount);
     }
 
     public int GetKillCount()

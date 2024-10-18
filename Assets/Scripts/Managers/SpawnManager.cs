@@ -15,26 +15,36 @@ public class SpawnManager : MonoBehaviour
     private float lastSpawnTime = 0f;
     
 
-    [SerializeField] private GameObject bat;
-    [SerializeField] private GameObject crab;
-    [SerializeField] private GameObject golem;
 
+
+    [System.Serializable]
+    public class SpawnInfo
+    {
+        public int killCount;  
+        public string tag;     // 몬스터 태그
+        public GameObject prefab;  // 몬스터 프리팹
+        public int size;       // 생성할 몬스터의 수
+    }
+      
+    public List<SpawnInfo> spawnInpos;
 
     private void Start()
     {
 
         objectPool = GetComponent<ObjectPool>();
-        spawnPointArray = GameObject.FindGameObjectsWithTag("SpawnPoint");
-        AddPool("Bat", bat, 10);
-        
-   
+        spawnPointArray = GameObject.FindGameObjectsWithTag("SpawnPoint");       
+
+        DataManager.Instance.OnKillCountChanged += SpawnHandlerByKillCount;
+        UpdateArray();
+
+
 
     }
     
     private void Update()
     {
         SpawnTimeChecker();
-        SpawnHandlerByKillCount(DataManager.Instance.GetKillCount());
+        
     }
 
     public void SpawnTimeChecker()
@@ -53,32 +63,23 @@ public class SpawnManager : MonoBehaviour
     public void Spawn()
     {
         string currentSelectedPool = SelectRandomPool();
-
+        Debug.Log("선택된 풀" + currentSelectedPool);
         int randomIndex = Random.Range(0, spawnPointArray.Length);
 
         objectPool.SpawnFromPool(currentSelectedPool, spawnPointArray[randomIndex]);
         
     }
 
-    private void SpawnHandlerByKillCount(int killCount)  // 리팩토링 예정
+    private void SpawnHandlerByKillCount(int killCount)
     {
-
-        Debug.Log(killCount);
-        switch(killCount)
+        foreach (var info in spawnInpos)
         {
-            case 10:
-                if (poolNameList.Contains("Crab")) return;
-
-                AddPool("Crab", crab, 10);              
-                break;
-
-            case 20:
-                if (poolNameList.Contains("Golem")) return;
-                AddPool("Golem", golem, 10);               
-                break;
-
+            if (killCount == info.killCount && !poolNameList.Contains(info.tag))
+            {
+                AddPool(info.tag, info.prefab, info.size);
+                break; 
+            }
         }
-
     }
 
     public string SelectRandomPool()
