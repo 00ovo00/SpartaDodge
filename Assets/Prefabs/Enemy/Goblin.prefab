@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01a648f3aeacbf34d8bb4501021cae41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthChangeDelay: 0.5
+  healthChangeDelay: 0.1
 --- !u!114 &2839917588092085454
 MonoBehaviour:
   m_ObjectHideFlags: 0

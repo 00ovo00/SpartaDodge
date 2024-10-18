@@ -11,12 +11,13 @@ public class ObjectPool : MonoBehaviour
         public GameObject prefab;
         public int size;    // 미리 생성해 둘 오브젝트 개수
     }
-    public string[] poolNameArray { get; private set; }
+    public List<string> PollNameList { get; private set; }
     public List<Pool> Pools;
     public Dictionary<string, Queue<GameObject>> PoolDictionary;
 
     private void Awake()
     {
+        PollNameList = new List<string>();
         PoolDictionary = new Dictionary<string, Queue<GameObject>>();
         InitializePools();
     }
@@ -40,17 +41,17 @@ public class ObjectPool : MonoBehaviour
             objectPool.Enqueue(obj);
         }
         PoolDictionary.Add(tag, objectPool);
-        UpdatePoolNameArray();
+        UpdatePoolNameList(tag);
     }
 
-    private void UpdatePoolNameArray()
+    private void UpdatePoolNameList(string tag)
     {
-        poolNameArray = new string[PoolDictionary.Count];
-        int index = 0;
-        foreach (var key in PoolDictionary.Keys)
-        {
-            poolNameArray[index++] = key;
-        }
+        PollNameList.Add(tag);
+    }
+
+    public List<string> GetPoolNameList()
+    {
+        return PollNameList;
     }
 
 
