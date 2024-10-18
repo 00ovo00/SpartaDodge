@@ -12,14 +12,15 @@ public class HealthSystem : MonoBehaviour
     private BoxCollider2D boxcollider;
     private Rigidbody2D rb;
 
-    private PlayerInfoUI playerInfoUI;
+    public event Action<float, float> OnHealthChanged;
 
     // 체력이 변했을 때 할 행동들을 정의하고 적용 가능
     public event Action OnDamage;
     public event Action OnHeal;
     public event Action OnDeath;
     public event Action OnInvincibilityEnd;
-    
+    public event Action OnGameOver;
+
     public float CurrentHealth { get; private set; }
 
     // get만 구현된 것처럼 프로퍼티를 사용하는 것
@@ -32,14 +33,13 @@ public class HealthSystem : MonoBehaviour
         animator = GetComponentInChildren<Animator>();    
         boxcollider = GetComponent<BoxCollider2D>();
         statsHandler = GetComponent<CharacterStatHandler>();
-        playerInfoUI = FindObjectOfType<PlayerInfoUI>();
     }
 
     private void Start()
     {
         CurrentHealth = MaxHealth;
         if (gameObject.CompareTag("Player"))
-            playerInfoUI.UpdateHealth(CurrentHealth, MaxHealth);
+            OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
     }
 
     private void Update()
@@ -82,12 +82,12 @@ public class HealthSystem : MonoBehaviour
 
         // 플레이어 체력 UI 갱신
         if (gameObject.CompareTag("Player"))
-            playerInfoUI.UpdateHealth(CurrentHealth, MaxHealth);
+            OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
 
         // 플레이어 체력이 0 이하면 게임 오버 호출
         if (gameObject.CompareTag("Player") && CurrentHealth <= 0f)
         {
-            GameManager.Instance.GameOver();
+            OnGameOver?.Invoke(); 
             return true;
         }
         // 적 체력이 0 이하면 사망 이벤트 호출 

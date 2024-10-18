@@ -20,6 +20,12 @@ public class GameManager : MonoBehaviour
 
         ObjectPool = GetComponent<ObjectPool>();
     }
+    private void Start()
+    {
+        HealthSystem playerHealthSystem = Player.GetComponent<HealthSystem>();
+        if (playerHealthSystem != null)
+            playerHealthSystem.OnGameOver += GameOver;
+    }
     public void GameOver()
     {
         if (isGameOver) return;
