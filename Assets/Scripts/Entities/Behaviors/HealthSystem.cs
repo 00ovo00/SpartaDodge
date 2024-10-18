@@ -11,6 +11,9 @@ public class HealthSystem : MonoBehaviour
     private bool isAttacked = false;
     private BoxCollider2D boxcollider;
     private Rigidbody2D rb;
+
+    private PlayerInfoUI playerInfoUI;
+
     // 체력이 변했을 때 할 행동들을 정의하고 적용 가능
     public event Action OnDamage;
     public event Action OnHeal;
@@ -29,12 +32,14 @@ public class HealthSystem : MonoBehaviour
         animator = GetComponentInChildren<Animator>();    
         boxcollider = GetComponent<BoxCollider2D>();
         statsHandler = GetComponent<CharacterStatHandler>();
+        playerInfoUI = FindObjectOfType<PlayerInfoUI>();
     }
 
     private void Start()
     {
         CurrentHealth = MaxHealth;
-       
+        if (gameObject.CompareTag("Player"))
+            playerInfoUI.UpdateHealth(CurrentHealth, MaxHealth);
     }
 
     private void Update()
@@ -75,10 +80,9 @@ public class HealthSystem : MonoBehaviour
         // CurrentHealth = CurrentHealth > MaxHealth ? MaxHealth : CurrentHealth;
         // CurrentHealth = CurrentHealth < 0 ? 0 : CurrentHealth; 와 같아요!
 
-        // 플레이어 체력 콘솔 출력으로 확인
-        // TODO : UI에서 확인하도록 수정
-        if (gameObject.name == "Character")
-            Debug.Log($"PlayerHP : {CurrentHealth}");
+        // 플레이어 체력 UI 갱신
+        if (gameObject.CompareTag("Player"))
+            playerInfoUI.UpdateHealth(CurrentHealth, MaxHealth);
 
         // 플레이어 체력이 0 이하면 게임 오버 호출
         if (gameObject.CompareTag("Player") && CurrentHealth <= 0f)
