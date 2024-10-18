@@ -6,8 +6,10 @@ public class DataManager : MonoBehaviour
     public static DataManager Instance;
     private PlayerInfoUI playerInfoUI;
     public event Action<int> OnKillCountChanged;
+
     private int killCount = 0;
     private float score = 0.0f;
+    private float bestScore = 0.0f;
 
     private void Awake()
     {
@@ -43,5 +45,13 @@ public class DataManager : MonoBehaviour
     public float GetScore()
     {
         return score;
+    }
+    public float GetBestScore()
+    {
+        return bestScore;
+    }
+    public void SetBestScore(float newBestScore)
+    {
+        bestScore = newBestScore;
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,5 +34,8 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 0.0f;
         Debug.Log("GameOver");
+    }
+    public void ReStartGame()
+    {
     }
 }
