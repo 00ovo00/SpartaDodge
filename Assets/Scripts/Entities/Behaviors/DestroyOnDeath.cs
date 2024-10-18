@@ -3,14 +3,11 @@ using UnityEngine;
 public class DestroyOnDeath : MonoBehaviour
 {
     private HealthSystem healthSystem;
-    private Rigidbody2D rb2d;
-
     private ItemDropManager itemDropManager;
 
     private void Start()
     {
         healthSystem = GetComponent<HealthSystem>();
-        rb2d = GetComponent<Rigidbody2D>();
         // 실제 실행 주체는 healthSystem임
         healthSystem.OnDeath += OnDeath;
         itemDropManager = FindObjectOfType<ItemDropManager>();
@@ -18,8 +15,7 @@ public class DestroyOnDeath : MonoBehaviour
 
     void OnDeath()
     {
-        // 멈추도록 수정
-        rb2d.velocity = Vector3.zero;
+        // 멈추도록 수정       
         gameObject.SetActive(false);
 
         // 킬카운트 증가
