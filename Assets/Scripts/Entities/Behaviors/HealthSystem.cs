@@ -1,20 +1,25 @@
 using System;
 using UnityEngine;
+using System.Collections;
 
 public class HealthSystem : MonoBehaviour
 {
     [SerializeField] private float healthChangeDelay = 0.5f;    // 무적 시간
-
+    private Animator animator;
     private CharacterStatHandler statsHandler;
     private float timeSinceLastChange = float.MaxValue; // 마지막 공격을 받고 경과한 시간
     private bool isAttacked = false;
+    private BoxCollider2D boxcollider;
+    private Rigidbody2D rb;
+
+    private PlayerInfoUI playerInfoUI;
 
     // 체력이 변했을 때 할 행동들을 정의하고 적용 가능
     public event Action OnDamage;
     public event Action OnHeal;
     public event Action OnDeath;
     public event Action OnInvincibilityEnd;
-
+    
     public float CurrentHealth { get; private set; }
 
     // get만 구현된 것처럼 프로퍼티를 사용하는 것
@@ -23,13 +28,18 @@ public class HealthSystem : MonoBehaviour
 
     private void Awake()
     {
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();    
+        boxcollider = GetComponent<BoxCollider2D>();
         statsHandler = GetComponent<CharacterStatHandler>();
+        playerInfoUI = FindObjectOfType<PlayerInfoUI>();
     }
 
     private void Start()
     {
         CurrentHealth = MaxHealth;
-        
+        if (gameObject.CompareTag("Player"))
+            playerInfoUI.UpdateHealth(CurrentHealth, MaxHealth);
     }
 
     private void Update()
@@ -70,10 +80,9 @@ public class HealthSystem : MonoBehaviour
         // CurrentHealth = CurrentHealth > MaxHealth ? MaxHealth : CurrentHealth;
         // CurrentHealth = CurrentHealth < 0 ? 0 : CurrentHealth; 와 같아요!
 
-        // 플레이어 체력 콘솔 출력으로 확인
-        // TODO : UI에서 확인하도록 수정
-        if (gameObject.name == "Character")
-            Debug.Log($"PlayerHP : {CurrentHealth}");
+        // 플레이어 체력 UI 갱신
+        if (gameObject.CompareTag("Player"))
+            playerInfoUI.UpdateHealth(CurrentHealth, MaxHealth);
 
         // 플레이어 체력이 0 이하면 게임 오버 호출
         if (gameObject.CompareTag("Player") && CurrentHealth <= 0f)
@@ -105,14 +114,26 @@ public class HealthSystem : MonoBehaviour
 
     private void CallDeath()
     {
-        OnDeath?.Invoke();
+        StartCoroutine(DeathSequence());
         DataManager.Instance.IncrementScore(MaxHealth);
     }
 
     private void OnEnable()
     {
         timeSinceLastChange = float.MaxValue;
+        rb.isKinematic = false;
     }
 
+    IEnumerator DeathSequence()
+    {
+        animator.SetTrigger("IsDie");
+        rb.velocity = Vector2.zero;
+        rb.isKinematic = true;
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Death"));
+        Debug.Log(animator.GetCurrentAnimatorStateInfo(0).IsName("Death") ? "죽음" : "아님");
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+
+        OnDeath?.Invoke();
+    }
 
 }
