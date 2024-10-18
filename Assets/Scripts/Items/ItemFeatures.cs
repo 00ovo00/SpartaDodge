@@ -3,11 +3,21 @@ using static UnityEditor.Progress;
 
 public class ItemFeatures : MonoBehaviour
 {
-    private ItemSO itemData; 
+    private ItemSO itemData;
+    private SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     public void SetItem(ItemSO item)
     {
         itemData = item;
+        if (spriteRenderer != null && itemData.SpriteImage != null)
+        {
+            spriteRenderer.sprite = itemData.SpriteImage;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -15,29 +25,26 @@ public class ItemFeatures : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             CharacterStatHandler statHandler = other.GetComponent<CharacterStatHandler>();
-            ApplyItemEffect(statHandler, itemData);
-            Destroy(gameObject); // 
+            HealthSystem healthSystem = other.GetComponent<HealthSystem>();
+
+            ApplyItemEffect(statHandler, healthSystem, itemData);
+
+            Destroy(gameObject); 
         }
     }
 
-    private void ApplyItemEffect(CharacterStatHandler statHandler, ItemSO item)
+    private void ApplyItemEffect(CharacterStatHandler statHandler, HealthSystem healthSystem, ItemSO item)
     {
-        CharacterStat newStatModifier = new CharacterStat
+        switch (item.itemType)
         {
-            statsChangeType = StatsChangeType.Add, // (ADD 대신 다른거 설정 가능)
-            maxHealth = item.itemType == ItemType.HealthRecovery ? (int)item.effectIncreaseAmount : statHandler.CurrentStat.maxHealth,
-            speed = item.itemType == ItemType.SpeedBoost ? statHandler.CurrentStat.speed + item.effectIncreaseAmount : statHandler.CurrentStat.speed
-        };
+            case ItemType.HealthRecovery:
+                healthSystem.Heal(item.effectIncreaseAmount);
+                break;
 
-        // 새로운 스탯 변경을 적용
-        statHandler.AddStatModifier(newStatModifier);
+            case ItemType.Invincibility:
+                statHandler.ActivateInvincibility(item.duration);
+                break;
 
-        // 무적 상태 효과
-        if (item.itemType == ItemType.Invincibility)
-        {
-            statHandler.ActivateInvincibility(item.duration);
         }
-
-        // 다른 아이템 효과 처리
     }
 }
