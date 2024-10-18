@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e304916369d95e43956a928de48db58, type: 3}
-  m_Name: TestItemSO
+  m_Name: HealthPotionItemSO
   m_EditorClassIdentifier: 
-  itemName: Test Health Potion
-  description: test
+  itemName: Health Potion
+  description: health +50
   icon: {fileID: 21300000, guid: 1e0424c5424c1c64ebec05ca0e5ebea3, type: 3}
   itemType: 0
   duration: 1
-  effectIncreaseAmount: 5
+  effectIncreaseAmount: 50

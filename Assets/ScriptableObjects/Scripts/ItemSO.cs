@@ -5,7 +5,7 @@ public class ItemSO : ScriptableObject
 {
     public string itemName;
     public string description;
-    public Sprite icon;
+    public Sprite SpriteImage;
     public ItemType itemType;
     public float duration; //지속시간
     public float effectIncreaseAmount; // 효과 증가량
@@ -16,5 +16,4 @@ public enum ItemType
     HealthRecovery,
     SpeedBoost,
     Invincibility,
-    AttackBoost
 }

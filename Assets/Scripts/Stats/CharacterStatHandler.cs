@@ -54,10 +54,10 @@ public class CharacterStatHandler : MonoBehaviour
 
     public void ActivateInvincibility(float duration)
     {
-        StartCoroutine(TemporaryInvincibility(duration));
+        StartCoroutine(CountdownInvincibility(duration));
     }
 
-    private IEnumerator TemporaryInvincibility(float duration)
+    private IEnumerator CountdownInvincibility(float duration)
     {
         Debug.Log("무적시작");
         yield return new WaitForSeconds(duration);

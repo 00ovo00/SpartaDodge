@@ -50,6 +50,15 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
+    public void Heal(float healAmount)
+    {
+        CurrentHealth += healAmount;
+        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth); 
+        OnHeal?.Invoke(); 
+
+        Debug.Log($"hp가 {healAmount}만큼 회복되었습니다. 현재 hp: {CurrentHealth}");
+    }
+
     public bool ChangeHealth(float change)
     {
         // 무적 시간에는 체력이 닳지 않음
