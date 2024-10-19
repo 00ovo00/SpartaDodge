@@ -29,8 +29,7 @@ public class SoundManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        playerInputController = FindObjectOfType<PlayerInputController>();
-        healthSystem = FindObjectOfType<HealthSystem>();
+        ReSetBinding();
     }
 
 
@@ -69,4 +68,10 @@ public class SoundManager : MonoBehaviour
     private void PlayGameOverBGM() => PlayBGM(gameOverBGM);
     private void PlayPlayerAttackSFX() => PlaySFX(playerAttackSFX);
     private void PlayEnemyDeathSFX() => PlaySFX(enemyDeathSFX);
+
+    public void ReSetBinding()
+    {
+        playerInputController = FindObjectOfType<PlayerInputController>();
+        healthSystem = FindObjectOfType<HealthSystem>();
+    }
 }
