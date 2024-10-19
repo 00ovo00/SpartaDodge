@@ -20,6 +20,7 @@ public class HealthSystem : MonoBehaviour
     public event Action OnDeath;
     public event Action OnInvincibilityEnd;
     public event Action OnGameOver;
+    private bool isInvincible = false;
 
     public float CurrentHealth { get; private set; }
 
@@ -66,10 +67,12 @@ public class HealthSystem : MonoBehaviour
 
     public bool ChangeHealth(float change)
     {
-        // 무적 시간에는 체력이 닳지 않음
+        if (isInvincible)
+        {
+            return false;
+        }
         if (timeSinceLastChange < healthChangeDelay)
         {
-            Debug.Log("무적시간");
             return false;
         }
 
@@ -134,6 +137,18 @@ public class HealthSystem : MonoBehaviour
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
         OnDeath?.Invoke();
+    }
+
+  
+    public void EnableInvincibility()
+    {
+        isInvincible = true;
+    }
+
+
+    public void DisableInvincibility()
+    {
+        isInvincible = false;
     }
 
 }
