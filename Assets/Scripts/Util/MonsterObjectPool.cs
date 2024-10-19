@@ -13,14 +13,7 @@ public class MonsterObjectPool : ObjectPool
     }
     public override void CreatePool(string tag, GameObject prefab, int size)
     {
-        Queue<GameObject> objectPool = new Queue<GameObject>();
-        for (int i = 0; i < size; i++)
-        {
-            GameObject obj = Instantiate(prefab, transform);
-            obj.SetActive(false);
-            objectPool.Enqueue(obj);
-        }
-        PoolDictionary.Add(tag, objectPool);
+        base.CreatePool(tag, prefab, size);
         UpdatePoolNameList(tag);
     }
 

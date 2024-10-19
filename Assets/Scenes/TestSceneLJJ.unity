@@ -133,7 +133,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4441186107620935550, guid: a8b0ba8ed73c6ec4598f88e75a66b21b, type: 3}
       propertyPath: Pools.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4441186107620935550, guid: a8b0ba8ed73c6ec4598f88e75a66b21b, type: 3}
       propertyPath: PollNameList.Array.size
@@ -195,7 +195,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4441186107620935550, guid: a8b0ba8ed73c6ec4598f88e75a66b21b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -314,7 +315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8254396926888051169, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
       propertyPath: Pools.Array.data[1].tag
-      value: ThrowSlime
+      value: Slime
       objectReference: {fileID: 0}
     - target: {fileID: 8254396926888051169, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
       propertyPath: Pools.Array.data[2].tag

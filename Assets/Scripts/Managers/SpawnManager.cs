@@ -9,24 +9,34 @@ using Random = UnityEngine.Random;
 public class SpawnManager : MonoBehaviour
 {
     private GameObject[] spawnPointArray;
-    private ObjectPool objectPool;
-    private MonsterObjectPool monsterObjectPool;    
+    public ObjectPool objectPool;
+    private MonsterObjectPool monsterObjectPool;
     [SerializeField] private float spawnTime = 4;
     private List<string> poolNameList;
     private float lastSpawnTime = 0f;
-    
+
+    public static SpawnManager Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject); 
+            return;
+        }
+
+        Instance = this;
 
 
-
+    }
     [System.Serializable]
     public class SpawnInfo
     {
-        public int killCount;  
+        public int killCount;
         public string tag;     // 몬스터 태그
         public GameObject prefab;  // 몬스터 프리팹
         public int size;       // 생성할 몬스터의 수
     }
-      
+
     public List<SpawnInfo> spawnInpos;
 
     private void Start()
@@ -34,7 +44,7 @@ public class SpawnManager : MonoBehaviour
 
         objectPool = GetComponent<ObjectPool>();
         monsterObjectPool = GetComponent<MonsterObjectPool>();
-        spawnPointArray = GameObject.FindGameObjectsWithTag("SpawnPoint");       
+        spawnPointArray = GameObject.FindGameObjectsWithTag("SpawnPoint");
 
         DataManager.Instance.OnKillCountChanged += SpawnHandlerByKillCount;
         UpdateArray();
@@ -42,11 +52,11 @@ public class SpawnManager : MonoBehaviour
 
 
     }
-    
+
     private void Update()
     {
         SpawnTimeChecker();
-        
+
     }
 
     public void SpawnTimeChecker()
@@ -69,7 +79,7 @@ public class SpawnManager : MonoBehaviour
         int randomIndex = Random.Range(0, spawnPointArray.Length);
 
         monsterObjectPool.SpawnFromPool(currentSelectedPool, spawnPointArray[randomIndex]);
-        
+
     }
 
     private void SpawnHandlerByKillCount(int killCount)
@@ -79,7 +89,7 @@ public class SpawnManager : MonoBehaviour
             if (killCount == info.killCount && !poolNameList.Contains(info.tag))
             {
                 AddPool(info.tag, info.prefab, info.size);
-                break; 
+                break;
             }
         }
     }
@@ -95,17 +105,17 @@ public class SpawnManager : MonoBehaviour
     }
 
     private void AddPool(string tag, GameObject prefab, int size)
-    {    
-            monsterObjectPool.CreatePool(tag, prefab, size);
-            UpdateArray();    
+    {
+        monsterObjectPool.CreatePool(tag, prefab, size);
+        UpdateArray();
     }
 
     private void UpdateArray()
     {
         poolNameList = monsterObjectPool.GetPoolNameList();
-        
+
     }
 
-  
-  
+
+
 }

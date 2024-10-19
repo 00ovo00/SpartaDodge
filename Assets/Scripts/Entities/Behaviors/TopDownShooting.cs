@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class TopDownShooting : MonoBehaviour
@@ -55,10 +56,12 @@ public class TopDownShooting : MonoBehaviour
 
     private void CreateProjectile(RangedAttackSO rangedAttackSO, float angle)
     {
+        Debug.Log(rangedAttackSO);
         // 오브젝트 풀을 활용한 생성
-        GameObject obj = GameManager.Instance.ObjectPool.SpawnFromPool(rangedAttackSO.bulletNameTag);
-
+        GameObject obj = SpawnManager.Instance.objectPool.SpawnFromPool(rangedAttackSO.bulletNameTag);
+       
         // 발사체 기본 세팅
+        Debug.Log("사격 위치"+ projectileSpawnPosition.position);
         obj.transform.position = projectileSpawnPosition.position;
         ProjectileController attackController = obj.GetComponent<ProjectileController>();
         attackController.InitializeAttack(RotateVector2(aimDirection, angle), rangedAttackSO);
