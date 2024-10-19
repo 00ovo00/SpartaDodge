@@ -40,5 +40,6 @@ public class GameOverUI : MonoBehaviour
 
     private void RestartGame()
     {
+        GameManager.Instance.ReLoadGame();
     }
 }
