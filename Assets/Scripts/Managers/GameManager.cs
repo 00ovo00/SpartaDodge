@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string playerTag = "Player";
 
     private bool isGameOver = false;
+
+    public static event Action OnGameStart;
 
     private void Awake()
     {
@@ -26,6 +29,7 @@ public class GameManager : MonoBehaviour
         HealthSystem playerHealthSystem = Player.GetComponent<HealthSystem>();
         if (playerHealthSystem != null)
             playerHealthSystem.OnGameOver += GameOver;
+        OnGameStart?.Invoke();
     }
     public void GameOver()
     {
