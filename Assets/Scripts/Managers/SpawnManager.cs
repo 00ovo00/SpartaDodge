@@ -10,6 +10,7 @@ public class SpawnManager : MonoBehaviour
 {
     private GameObject[] spawnPointArray;
     private ObjectPool objectPool;
+    private MonsterObjectPool monsterObjectPool;    
     [SerializeField] private float spawnTime = 4;
     private List<string> poolNameList;
     private float lastSpawnTime = 0f;
@@ -32,6 +33,7 @@ public class SpawnManager : MonoBehaviour
     {
 
         objectPool = GetComponent<ObjectPool>();
+        monsterObjectPool = GetComponent<MonsterObjectPool>();
         spawnPointArray = GameObject.FindGameObjectsWithTag("SpawnPoint");       
 
         DataManager.Instance.OnKillCountChanged += SpawnHandlerByKillCount;
@@ -66,7 +68,7 @@ public class SpawnManager : MonoBehaviour
         Debug.Log("선택된 풀" + currentSelectedPool);
         int randomIndex = Random.Range(0, spawnPointArray.Length);
 
-        objectPool.SpawnFromPool(currentSelectedPool, spawnPointArray[randomIndex]);
+        monsterObjectPool.SpawnFromPool(currentSelectedPool, spawnPointArray[randomIndex]);
         
     }
 
@@ -93,14 +95,14 @@ public class SpawnManager : MonoBehaviour
     }
 
     private void AddPool(string tag, GameObject prefab, int size)
-    {
-        objectPool.CreatePool(tag, prefab, size);
-        UpdateArray();
+    {    
+            monsterObjectPool.CreatePool(tag, prefab, size);
+            UpdateArray();    
     }
 
     private void UpdateArray()
     {
-        poolNameList = objectPool.GetPoolNameList();
+        poolNameList = monsterObjectPool.GetPoolNameList();
         
     }
 
