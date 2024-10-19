@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
@@ -28,26 +29,10 @@ public class SoundManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        playerInputController = FindObjectOfType<PlayerInputController>();
-        healthSystem = FindObjectOfType<HealthSystem>();
     }
-
-
-    private void Start()
+    private void OnEnable()
     {
-        GameManager.OnGameStart += PlayPlayBGM;
-        healthSystem.OnGameOver += PlayGameOverBGM;
-        playerInputController.OnPlayerAttack += PlayPlayerAttackSFX;
-        DataManager.Instance.OnEnemyDeath += PlayEnemyDeathSFX;
-    }
-
-    private void OnDisable()
-    {
-        GameManager.OnGameStart -= PlayPlayBGM;
-        healthSystem.OnGameOver -= PlayGameOverBGM;
-        playerInputController.OnPlayerAttack -= PlayPlayerAttackSFX;
-        DataManager.Instance.OnEnemyDeath += PlayEnemyDeathSFX;
+        SceneManager.sceneLoaded += ReSetBinding;
     }
 
     public void PlayBGM(AudioClip clip)
@@ -69,4 +54,19 @@ public class SoundManager : MonoBehaviour
     private void PlayGameOverBGM() => PlayBGM(gameOverBGM);
     private void PlayPlayerAttackSFX() => PlaySFX(playerAttackSFX);
     private void PlayEnemyDeathSFX() => PlaySFX(enemyDeathSFX);
+
+    public void ReSetBinding(Scene scene, LoadSceneMode mode)
+    {
+        playerInputController = FindObjectOfType<PlayerInputController>();
+        healthSystem = FindObjectOfType<HealthSystem>();
+
+        GameManager.OnGameStart -= PlayPlayBGM;
+        GameManager.OnGameStart += PlayPlayBGM;
+        healthSystem.OnGameOver -= PlayGameOverBGM;
+        healthSystem.OnGameOver += PlayGameOverBGM;
+        playerInputController.OnPlayerAttack -= PlayPlayerAttackSFX;
+        playerInputController.OnPlayerAttack += PlayPlayerAttackSFX;
+        DataManager.OnEnemyDeath -= PlayEnemyDeathSFX;
+        DataManager.OnEnemyDeath += PlayEnemyDeathSFX;
+    }
 }
