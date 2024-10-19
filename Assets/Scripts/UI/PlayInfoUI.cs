@@ -4,8 +4,17 @@ using TMPro;
 
 public class PlayerInfoUI : MonoBehaviour
 {
+    private HealthSystem playerHealthSystem;
+
     [SerializeField] private Slider hpBar;
     [SerializeField] private TextMeshProUGUI scoreText;
+
+    private void Start()
+    {
+        playerHealthSystem = FindObjectOfType<HealthSystem>();
+        if (playerHealthSystem != null)
+            playerHealthSystem.OnHealthChanged += UpdateHealth;
+    }
 
     public void UpdateHealth(float currentHealth, float maxHealth)
     {
@@ -17,5 +26,10 @@ public class PlayerInfoUI : MonoBehaviour
     {
         if (scoreText != null)
             scoreText.text = $"Score: {score}";
+    }
+    private void OnDestroy()
+    {
+        if (playerHealthSystem != null)
+            playerHealthSystem.OnHealthChanged -= UpdateHealth;
     }
 }

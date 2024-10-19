@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class GameManager : MonoBehaviour
 
     private bool isGameOver = false;
 
+    public static event Action OnGameStart;
+
     private void Awake()
     {
         // 하나만 생성되도록 관리
@@ -20,6 +24,13 @@ public class GameManager : MonoBehaviour
 
         ObjectPool = GetComponent<ObjectPool>();
     }
+    private void Start()
+    {
+        HealthSystem playerHealthSystem = Player.GetComponent<HealthSystem>();
+        if (playerHealthSystem != null)
+            playerHealthSystem.OnGameOver += GameOver;
+        OnGameStart?.Invoke();
+    }
     public void GameOver()
     {
         if (isGameOver) return;
@@ -27,5 +38,8 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 0.0f;
         Debug.Log("GameOver");
+    }
+    public void ReStartGame()
+    {
     }
 }
