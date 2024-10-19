@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
-    private PlayerInfoUI playerInfoUI;
+    public PlayerInfoUI playerInfoUI;
     public event Action<int> OnKillCountChanged;
-    public event Action OnEnemyDeath;
+    public static event Action OnEnemyDeath;
 
     private int killCount = 0;
     private float score = 0.0f;
@@ -24,6 +25,10 @@ public class DataManager : MonoBehaviour
         Instance = this;
 
         playerInfoUI = FindObjectOfType<PlayerInfoUI>();
+    }
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += ResetData;
     }
 
     public void IncrementKillCount()
@@ -55,5 +60,11 @@ public class DataManager : MonoBehaviour
     public void SetBestScore(float newBestScore)
     {
         bestScore = newBestScore;
+    }
+    public void ResetData(Scene scene, LoadSceneMode mode)
+    {
+        killCount = 0;
+        score = 0.0f;
+        playerInfoUI = FindObjectOfType<PlayerInfoUI>();
     }
 }

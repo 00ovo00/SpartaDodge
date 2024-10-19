@@ -24,6 +24,10 @@ public class GameManager : MonoBehaviour
 
        
     }
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += GameStart;
+    }
     private void Start()
     {
         HealthSystem playerHealthSystem = Player.GetComponent<HealthSystem>();
@@ -44,5 +48,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1.0f;
         isGameOver = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void GameStart(Scene scene, LoadSceneMode mode)
+    {
+        OnGameStart?.Invoke();
     }
 }
