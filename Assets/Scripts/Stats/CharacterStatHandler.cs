@@ -59,8 +59,18 @@ public class CharacterStatHandler : MonoBehaviour
 
     private IEnumerator CountdownInvincibility(float duration)
     {
-        Debug.Log("公利矫累");
+        Debug.Log("公利 矫累");
+        HealthSystem healthSystem = GetComponent<HealthSystem>();
+        healthSystem.EnableInvincibility();
+
         yield return new WaitForSeconds(duration);
-        Debug.Log("公利场");
+
+        healthSystem.DisableInvincibility(); 
+        Debug.Log("公利 场");
+    }
+
+    public void OverrideSpeed(float newSpeed)
+    {
+        CurrentStat.speed = Mathf.Clamp(newSpeed, 0, maxSpeed); 
     }
 }
