@@ -14,6 +14,7 @@ public class PlayerInputController : TopDownController
     {
         base.Awake();   // 부모의 Awake도 실행
         _camera = Camera.main;  // 메인 카메라 가져오기
+        GameManager.Instance.playerHealthSystem = this.GetComponent<HealthSystem>();
     }
 
     // OnXXX 메소드는 사용자 입력 데이터를 정규화 등의 전처리 마치고

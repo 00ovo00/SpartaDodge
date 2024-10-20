@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public Transform Player { get; private set; }
+    public GameObject Player { get; private set; }
     
     [SerializeField] private string playerTag = "Player";
 
@@ -14,14 +14,23 @@ public class GameManager : MonoBehaviour
 
     public static event Action OnTitle;
     public static event Action OnGameStart;
+    public HealthSystem playerHealthSystem;
 
     private void Awake()
     {
         // 하나만 생성되도록 관리
-        if (Instance != null) Destroy(gameObject);
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+
+        }
+            
         DontDestroyOnLoad(gameObject);
         Instance = this;
-        Player = GameObject.FindGameObjectWithTag(playerTag).transform;
+        Player = GameObject.FindGameObjectWithTag(playerTag);
+        Debug.Log(Player.gameObject);
+        
     }
     private void OnEnable()
     {
@@ -29,9 +38,8 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        HealthSystem playerHealthSystem = Player.GetComponent<HealthSystem>();
-        if (playerHealthSystem != null)
-            playerHealthSystem.OnGameOver += GameOver;
+   
+
     }
 
     public void GameOver()
@@ -59,12 +67,15 @@ public class GameManager : MonoBehaviour
             case "TestSceneHSH":
                 OnGameStart?.Invoke();
                 Debug.Log("OnStart");
+                Player = GameObject.FindGameObjectWithTag(playerTag);
                 break;
 
         }
     }
     public void StartGame()
     {
+
+
         string sceneName = "TestSceneHSH";
         SceneManager.LoadScene(sceneName);
         SceneManager.sceneLoaded += (Scene scene, LoadSceneMode mode) =>
@@ -72,8 +83,12 @@ public class GameManager : MonoBehaviour
             if (scene.name == "TestSceneHSH")
             {
                 OnGameStart?.Invoke();
+                Player = GameObject.FindGameObjectWithTag(playerTag);
+
                 SceneManager.sceneLoaded -= FindGameScene;
             }
         };
     }
+
+   
 }

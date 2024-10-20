@@ -15,7 +15,8 @@ public class TopDownEnemyController : TopDownController
     protected virtual void Start()
     {
         gameManager = GameManager.Instance;
-        ClosestTarget = gameManager.Player;
+        ClosestTarget = gameManager.Player.transform;
+        Debug.Log(gameManager.Player);
     }
 
     protected virtual void FixedUpdate()
@@ -24,7 +25,7 @@ public class TopDownEnemyController : TopDownController
 
     protected float DistanceToTarget()
     {
-        return Vector3.Distance(transform.position, ClosestTarget.position);
+        return Vector2.Distance(transform.position, ClosestTarget.position);
     }
 
     protected Vector2 DirectionToTarget()
