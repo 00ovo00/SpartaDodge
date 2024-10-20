@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     private bool isGameOver = false;
 
+    public static event Action OnTitle;
     public static event Action OnGameStart;
 
     private void Awake()
@@ -26,14 +27,13 @@ public class GameManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += GameStart;
+        SceneManager.sceneLoaded += FindGameScene;
     }
     private void Start()
     {
         HealthSystem playerHealthSystem = Player.GetComponent<HealthSystem>();
         if (playerHealthSystem != null)
             playerHealthSystem.OnGameOver += GameOver;
-        OnGameStart?.Invoke();
     }
     public void GameOver()
     {
@@ -49,8 +49,19 @@ public class GameManager : MonoBehaviour
         isGameOver = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-    public void GameStart(Scene scene, LoadSceneMode mode)
+    public void FindGameScene(Scene scene, LoadSceneMode mode)
     {
-        OnGameStart?.Invoke();
+        switch (scene.name)
+        {
+            case "TitleSceneHSH":
+                OnTitle?.Invoke();
+                Debug.Log("OnTitle");
+                break;
+            case "TestSceneHSH":
+                OnGameStart?.Invoke();
+                Debug.Log("OnStart");
+                break;
+
+        }
     }
 }
