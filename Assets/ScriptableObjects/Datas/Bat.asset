@@ -25,7 +25,7 @@ MonoBehaviour:
   bulletNameTag: Slime
   duration: 5
   spread: 8
-  numberofProjectilesPerShot: 1
+  numberofProjectilesPerShot: 2
   multipleProjectilesAngel: 7
   projectileColor: {r: 1, g: 1, b: 1, a: 0.60784316}
   particleSystem: {fileID: 9198164191775281119, guid: 434a1fc9eef4e9d46a944a00a5248b11, type: 3}

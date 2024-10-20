@@ -7,9 +7,10 @@ public class TopDownShooting : MonoBehaviour
 
     [SerializeField] private Transform projectileSpawnPosition; // 화살 생성 지점
     private Vector2 aimDirection = Vector2.right;   // 활 방향
-
+    private PlayerInputController playerInputController;
     private void Awake()
     {
+        playerInputController= GetComponent<PlayerInputController>();
         controller = GetComponent<TopDownController>();
     }
 
@@ -68,6 +69,13 @@ public class TopDownShooting : MonoBehaviour
 
         // 다음강에서 개선 시 활용할 코드
         // obj.SetActive(true);
+
+        if (rangedAttackSO.bulletNameTag == "Arrow")
+        {
+            playerInputController.CallAttack();
+
+        }
+        
     }
 
     private static Vector2 RotateVector2(Vector2 v, float degree)

@@ -219,7 +219,7 @@ PrefabInstance:
       objectReference: {fileID: 8058344544966557577, guid: fc029adf718aff9408982c713e765c86, type: 3}
     - target: {fileID: 987114388034667566, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
       propertyPath: spawnTime
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 987114388034667566, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
       propertyPath: spawnInfos.Array.size
@@ -305,6 +305,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6950128154427782684, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -16.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7164997290385917070, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -9.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7817100442883804138, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 16.73
+      objectReference: {fileID: 0}
     - target: {fileID: 8254396926888051169, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
       propertyPath: Pools.Array.size
       value: 3
@@ -331,7 +343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8254396926888051169, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
       propertyPath: Pools.Array.data[2].size
-      value: 10
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8254396926888051169, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
       propertyPath: Pools.Array.data[0].prefab
@@ -345,6 +357,14 @@ PrefabInstance:
       propertyPath: Pools.Array.data[2].prefab
       value: 
       objectReference: {fileID: 4607073935383559855, guid: ea7b6a2d9d3a83d45a4d4ce8678e7dcb, type: 3}
+    - target: {fileID: 9203548084352955943, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -16.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 9203548084352955943, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14300,7 +14320,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2137326169724335621, guid: c804a96515ad1814180d0666bda66eb3, type: 3}
       propertyPath: dropChance
-      value: 0.3
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2137326169724335621, guid: c804a96515ad1814180d0666bda66eb3, type: 3}
       propertyPath: droppableItems.Array.size

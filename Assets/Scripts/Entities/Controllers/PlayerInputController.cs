@@ -42,6 +42,13 @@ public class PlayerInputController : TopDownController
     {
         // 마우스 좌클릭 이벤트 발생하면 공격중인 상태로 변경
         IsAttacking = value.isPressed;
+        
+    }
+
+    public void CallAttack()
+    {
         OnPlayerAttack?.Invoke();
+
+
     }
 }

@@ -160,7 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseStats:
     statsChangeType: 2
-    maxHealth: 3
+    maxHealth: 1
     speed: 2
     attackSO: {fileID: 11400000, guid: 4ec109c1b4571864ab359d784ac31b86, type: 2}
   statsModifiers: []
