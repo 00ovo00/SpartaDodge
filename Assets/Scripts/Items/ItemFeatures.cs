@@ -42,11 +42,11 @@ public class ItemFeatures : MonoBehaviour
                 break;
 
             case ItemType.SpeedBoost:
-                statHandler.OverrideSpeed(item.effectIncreaseAmount); 
+                statHandler.OverrideSpeed(item.effectIncreaseAmount, item.duration); 
                 break;
 
             case ItemType.Invincibility:
-                statHandler.ActivateInvincibility(item.duration);
+                healthSystem.Invincibility(item.duration);
                 break;
 
         }
