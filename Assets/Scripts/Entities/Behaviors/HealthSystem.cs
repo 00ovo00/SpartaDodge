@@ -6,6 +6,7 @@ public class HealthSystem : MonoBehaviour
 {
     [SerializeField] private float healthChangeDelay = 0.5f;    // 무적 시간
     private Animator animator;
+    private TopDownAnimationController animationController;
     private CharacterStatHandler statsHandler;
     private float timeSinceLastChange = float.MaxValue; // 마지막 공격을 받고 경과한 시간
     private bool isAttacked = false;
@@ -18,9 +19,10 @@ public class HealthSystem : MonoBehaviour
     public event Action OnDamage;
     public event Action OnHeal;
     public event Action OnDeath;
+    public event Action<float> OnInvincibilityStart;
     public event Action OnInvincibilityEnd;
-    public event Action OnGameOver;
     private bool isInvincible = false;
+    public event Action OnGameOver;
 
     public float CurrentHealth { get; private set; }
 
@@ -34,6 +36,7 @@ public class HealthSystem : MonoBehaviour
         animator = GetComponentInChildren<Animator>();    
         boxcollider = GetComponent<BoxCollider2D>();
         statsHandler = GetComponent<CharacterStatHandler>();
+        animationController = GetComponent<TopDownAnimationController>();
     }
 
     private void Start()
@@ -67,14 +70,8 @@ public class HealthSystem : MonoBehaviour
 
     public bool ChangeHealth(float change)
     {
-        if (isInvincible)
-        {
+        if (isInvincible || timeSinceLastChange < healthChangeDelay)
             return false;
-        }
-        if (timeSinceLastChange < healthChangeDelay)
-        {
-            return false;
-        }
 
         timeSinceLastChange = 0f;
         CurrentHealth += change;
@@ -86,6 +83,7 @@ public class HealthSystem : MonoBehaviour
         // 플레이어 체력 UI 갱신
         if (gameObject.CompareTag("Player"))
             OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
+
 
         // 플레이어 체력이 0 이하면 게임 오버 호출
         if (gameObject.CompareTag("Player") && CurrentHealth <= 0f)
@@ -139,16 +137,28 @@ public class HealthSystem : MonoBehaviour
         OnDeath?.Invoke();
     }
 
-  
-    public void EnableInvincibility()
+
+    public void Invincibility(float duration)
     {
-        isInvincible = true;
+        if (!isInvincible)
+        {
+            isInvincible = true;
+            OnInvincibilityStart?.Invoke(duration);
+
+            if (animationController != null)
+            {
+                animationController.StartInvincibilityEffectAnimation(duration);
+            }
+
+            StartCoroutine(DisableInvincibility(duration));
+        }
     }
-
-
-    public void DisableInvincibility()
+    private IEnumerator DisableInvincibility(float duration)
     {
+        yield return new WaitForSeconds(duration);
         isInvincible = false;
+        OnInvincibilityEnd?.Invoke();
     }
+
 
 }
