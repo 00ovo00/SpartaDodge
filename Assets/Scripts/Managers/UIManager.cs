@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
             canvasGroup.interactable = false; 
             canvasGroup.blocksRaycasts = false; 
         }
-        StartCoroutine(maskLoadScene("TestSceneHSH")); 
+        StartCoroutine(maskLoadScene("MainScene")); 
     }
     private IEnumerator maskLoadScene(string sceneName)
     {

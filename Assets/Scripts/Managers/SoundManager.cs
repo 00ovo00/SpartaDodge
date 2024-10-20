@@ -75,7 +75,7 @@ public class SoundManager : MonoBehaviour
 
     public void ReSetBinding(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name != "TitleSceneHSH")
+        if (scene.name != "TitleScene")
         {
             playerInputController = FindObjectOfType<PlayerInputController>();
             healthSystem = FindObjectOfType<HealthSystem>();

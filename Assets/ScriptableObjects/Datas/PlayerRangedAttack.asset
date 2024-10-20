@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerRangedAttack
   m_EditorClassIdentifier: 
   size: 1
-  delay: 0.15
+  delay: 0.4
   power: 2
   speed: 10
   target:

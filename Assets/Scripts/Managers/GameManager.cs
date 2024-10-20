@@ -60,11 +60,11 @@ public class GameManager : MonoBehaviour
     {
         switch (scene.name)
         {
-            case "TitleSceneHSH":
+            case "TitleScene":
                 OnTitle?.Invoke();
                 Debug.Log("OnTitle");
                 break;
-            case "TestSceneHSH":
+            case "MainScene":
                 OnGameStart?.Invoke();
                 Debug.Log("OnStart");
                 Player = GameObject.FindGameObjectWithTag(playerTag);
@@ -76,11 +76,11 @@ public class GameManager : MonoBehaviour
     {
 
 
-        string sceneName = "TestSceneHSH";
+        string sceneName = "MainScene";
         SceneManager.LoadScene(sceneName);
         SceneManager.sceneLoaded += (Scene scene, LoadSceneMode mode) =>
         {
-            if (scene.name == "TestSceneHSH")
+            if (scene.name == "MainScene")
             {
                 OnGameStart?.Invoke();
                 Player = GameObject.FindGameObjectWithTag(playerTag);
