@@ -61,7 +61,6 @@ public class CharacterStatHandler : MonoBehaviour
                     CurrentStat.speed = modifier.speed;
                     break;
             }
-            CurrentStat.speed = (CurrentStat.speed > maxSpeed) ? maxSpeed : CurrentStat.speed;
         }
     }
 

@@ -10,7 +10,7 @@ public class DataManager : MonoBehaviour
     public static event Action OnEnemyDeath;
 
     private int killCount = 0;
-    private float score = 0.0f;
+    private float currentScore = 0.0f;
     private float bestScore = 0.0f;
 
     private void Awake()
@@ -43,15 +43,15 @@ public class DataManager : MonoBehaviour
     {
         return killCount;
     }
-    public void IncrementScore(float maxHp)
+    public void IncrementScore(float score)
     {
-        score += maxHp * 0.5f;
-        playerInfoUI.UpdateScore(score);
+        currentScore += score;
+        playerInfoUI.UpdateScore(currentScore);
     }
 
     public float GetScore()
     {
-        return score;
+        return currentScore;
     }
     public float GetBestScore()
     {
@@ -64,7 +64,7 @@ public class DataManager : MonoBehaviour
     public void ResetData(Scene scene, LoadSceneMode mode)
     {
         killCount = 0;
-        score = 0.0f;
+        currentScore = 0.0f;
         playerInfoUI = FindObjectOfType<PlayerInfoUI>();
     }
 }
