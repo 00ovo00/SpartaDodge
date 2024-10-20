@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using System.Reflection;
 
 public class HealthSystem : MonoBehaviour
 {
@@ -86,7 +87,6 @@ public class HealthSystem : MonoBehaviour
         if (gameObject.CompareTag("Player"))
             OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
 
-
         // 플레이어 체력이 0 이하면 게임 오버 호출
         if (gameObject.CompareTag("Player") && CurrentHealth <= 0f)
         {
@@ -98,8 +98,6 @@ public class HealthSystem : MonoBehaviour
         if (CurrentHealth <= 0f && gameObject.CompareTag("Enemy"))
        {
             CallDeath();
-            CurrentHealth = MaxHealth;
-            Debug.Log(CurrentHealth);
             return true;
         }
 
@@ -118,8 +116,9 @@ public class HealthSystem : MonoBehaviour
 
     private void CallDeath()
     {
+        float score = statsHandler.CurrentStat.attackSO.speed * statsHandler.CurrentStat.attackSO.power;
+        DataManager.Instance.IncrementScore(score * 0.5f);
         StartCoroutine(DeathSequence());
-        DataManager.Instance.IncrementScore(MaxHealth);
     }
 
     private void OnEnable()
