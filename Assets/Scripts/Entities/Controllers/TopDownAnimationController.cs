@@ -62,6 +62,7 @@ public class TopDownAnimationController : AnimationController
     }
     private void InvincibilityEnd()
     {
+        animator.SetBool(IsHit, false);
         StopCoroutine(InvincibilityEffectAnimation(10f));
         spriteRenderer.color = Color.white;
     }
