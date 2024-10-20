@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     }
     public void OnStartButtonClick()
     {
-        SceneManager.LoadScene("SampleScene");
+        string sceneName = "TestSceneHSH";
+        //SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(sceneName);
     }
 }

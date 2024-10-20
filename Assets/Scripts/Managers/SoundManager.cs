@@ -32,6 +32,8 @@ public class SoundManager : MonoBehaviour
     }
     private void OnEnable()
     {
+        GameManager.OnTitle -= PlayTitleBGM;
+        GameManager.OnTitle += PlayTitleBGM;
         SceneManager.sceneLoaded += ReSetBinding;
     }
 
@@ -50,6 +52,7 @@ public class SoundManager : MonoBehaviour
     }
 
     // 이벤트 함수로 등록
+    private void PlayTitleBGM() => PlayBGM(titleBGM);
     private void PlayPlayBGM() => PlayBGM(playBGM);
     private void PlayGameOverBGM() => PlayBGM(gameOverBGM);
     private void PlayPlayerAttackSFX() => PlaySFX(playerAttackSFX);
@@ -57,16 +60,19 @@ public class SoundManager : MonoBehaviour
 
     public void ReSetBinding(Scene scene, LoadSceneMode mode)
     {
-        playerInputController = FindObjectOfType<PlayerInputController>();
-        healthSystem = FindObjectOfType<HealthSystem>();
+        if (scene.name != "TitleSceneHSH")
+        {
+            playerInputController = FindObjectOfType<PlayerInputController>();
+            healthSystem = FindObjectOfType<HealthSystem>();
 
-        GameManager.OnGameStart -= PlayPlayBGM;
-        GameManager.OnGameStart += PlayPlayBGM;
-        healthSystem.OnGameOver -= PlayGameOverBGM;
-        healthSystem.OnGameOver += PlayGameOverBGM;
-        playerInputController.OnPlayerAttack -= PlayPlayerAttackSFX;
-        playerInputController.OnPlayerAttack += PlayPlayerAttackSFX;
-        DataManager.OnEnemyDeath -= PlayEnemyDeathSFX;
-        DataManager.OnEnemyDeath += PlayEnemyDeathSFX;
+            GameManager.OnGameStart -= PlayPlayBGM;
+            GameManager.OnGameStart += PlayPlayBGM;
+            healthSystem.OnGameOver -= PlayGameOverBGM;
+            healthSystem.OnGameOver += PlayGameOverBGM;
+            playerInputController.OnPlayerAttack -= PlayPlayerAttackSFX;
+            playerInputController.OnPlayerAttack += PlayPlayerAttackSFX;
+            DataManager.OnEnemyDeath -= PlayEnemyDeathSFX;
+            DataManager.OnEnemyDeath += PlayEnemyDeathSFX;
+        }
     }
 }
