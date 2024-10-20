@@ -37,6 +37,8 @@ public class HealthSystem : MonoBehaviour
         boxcollider = GetComponent<BoxCollider2D>();
         statsHandler = GetComponent<CharacterStatHandler>();
         animationController = GetComponent<TopDownAnimationController>();
+
+        OnGameOver += GameManager.Instance.GameOver;
     }
 
     private void Start()
@@ -88,6 +90,7 @@ public class HealthSystem : MonoBehaviour
         // 플레이어 체력이 0 이하면 게임 오버 호출
         if (gameObject.CompareTag("Player") && CurrentHealth <= 0f)
         {
+            Debug.Log("플레이어 체력0");
             OnGameOver?.Invoke(); 
             return true;
         }
@@ -159,6 +162,7 @@ public class HealthSystem : MonoBehaviour
         isInvincible = false;
         OnInvincibilityEnd?.Invoke();
     }
+
 
 
 }

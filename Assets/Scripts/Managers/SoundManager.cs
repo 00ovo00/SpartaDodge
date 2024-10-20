@@ -9,7 +9,6 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private HealthSystem healthSystem;
 
     [SerializeField] private AudioSource bgmSource;
-    [SerializeField] private AudioSource sfxSource;
 
     [Header("BGM Clips")]
     [SerializeField] private AudioClip titleBGM;
@@ -20,6 +19,9 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip playerAttackSFX;
     [SerializeField] private AudioClip enemyDeathSFX;
 
+    [Header("Object Pool")]
+    [SerializeField] private ObjectPool objectPool;
+
     private void Awake()
     {
         if (Instance != null)
@@ -29,6 +31,8 @@ public class SoundManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        objectPool = GetComponent<ObjectPool>();
     }
     private void OnEnable()
     {
@@ -46,17 +50,28 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlaySFX(AudioClip clip)
+    public void PlaySFX(string poolTag, AudioClip clip)
     {
-        sfxSource.PlayOneShot(clip);
+        GameObject audioObject = objectPool.SpawnFromPool(poolTag);
+
+        if (audioObject != null)
+        {
+            AudioSource source = audioObject.GetComponent<AudioSource>();
+            if (source != null)
+            {
+                source.clip = clip;
+                source.Play();
+            }
+        }
     }
 
     // 이벤트 함수로 등록
     private void PlayTitleBGM() => PlayBGM(titleBGM);
     private void PlayPlayBGM() => PlayBGM(playBGM);
     private void PlayGameOverBGM() => PlayBGM(gameOverBGM);
-    private void PlayPlayerAttackSFX() => PlaySFX(playerAttackSFX);
-    private void PlayEnemyDeathSFX() => PlaySFX(enemyDeathSFX);
+    private void PlayPlayerAttackSFX() => PlaySFX("PlayerAttackSFX" ,playerAttackSFX);
+    private void PlayEnemyDeathSFX() => PlaySFX("EnemyDeathSFX", enemyDeathSFX);
+
 
     public void ReSetBinding(Scene scene, LoadSceneMode mode)
     {

@@ -47,6 +47,7 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
         //SceneManager.LoadScene("SampleScene");
-        SceneManager.LoadScene(sceneName);
+        //SceneManager.LoadScene(sceneName);
+        GameManager.Instance.StartGame();
     }
 }
