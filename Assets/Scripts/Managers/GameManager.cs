@@ -22,8 +22,6 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         Instance = this;
         Player = GameObject.FindGameObjectWithTag(playerTag).transform;
-
-       
     }
     private void OnEnable()
     {
@@ -35,11 +33,12 @@ public class GameManager : MonoBehaviour
         if (playerHealthSystem != null)
             playerHealthSystem.OnGameOver += GameOver;
     }
+
     public void GameOver()
     {
         if (isGameOver) return;
+        
         isGameOver = true;
-
         Time.timeScale = 0.0f;
         Debug.Log("GameOver");
     }
@@ -63,5 +62,18 @@ public class GameManager : MonoBehaviour
                 break;
 
         }
+    }
+    public void StartGame()
+    {
+        string sceneName = "TestSceneHSH";
+        SceneManager.LoadScene(sceneName);
+        SceneManager.sceneLoaded += (Scene scene, LoadSceneMode mode) =>
+        {
+            if (scene.name == "TestSceneHSH")
+            {
+                OnGameStart?.Invoke();
+                SceneManager.sceneLoaded -= FindGameScene;
+            }
+        };
     }
 }
