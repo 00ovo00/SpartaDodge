@@ -16,7 +16,8 @@ public class DestroyOnDeath : MonoBehaviour
     void OnDeath()
     {
         // 적 객체 비활성화
-        gameObject.SetActive(false);    
+        gameObject.SetActive(false);
+        healthSystem.CurrentHealth += healthSystem.MaxHealth;
         // 킬카운트 증가
         DataManager.Instance.IncrementKillCount();
         // 적의 위치에서 아이템 드랍

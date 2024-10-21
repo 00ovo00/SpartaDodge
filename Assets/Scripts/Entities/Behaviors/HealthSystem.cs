@@ -26,7 +26,7 @@ public class HealthSystem : MonoBehaviour
     public event Action OnInvincibilityEnd;
     public event Action OnGameOver;
 
-    public float CurrentHealth { get; private set; }
+    public float CurrentHealth { get; set; }
 
     // get만 구현된 것처럼 프로퍼티를 사용하는 것
     // 데이터 유일성 & 정합성 유지
@@ -101,6 +101,7 @@ public class HealthSystem : MonoBehaviour
         // 적 체력이 0 이하면 사망 이벤트 호출 
         if (CurrentHealth <= 0f && gameObject.CompareTag("Enemy"))
        {
+            
             CallDeath();
             return true;
         }
