@@ -18,8 +18,8 @@ public class GameOverUI : MonoBehaviour
                 playerHealthSystem.OnGameOver += ShowGameOverScreen;
         }
 
-        gameOverPanel.SetActive(false);
-        restartButton.onClick.AddListener(RestartGame);
+        gameOverPanel.SetActive(false); // 시작 시 비활성화
+        restartButton.onClick.AddListener(RestartGame); // 재시작 버튼 클릭 시 게임 재시작 처리
     }
 
     private void ShowGameOverScreen()
@@ -31,6 +31,7 @@ public class GameOverUI : MonoBehaviour
 
         if (currentScore > bestScore)
         {
+            // 갱신한 최고점 저장하도록 메소드 호출
             DataManager.Instance.SetBestScore(currentScore);
         }
 

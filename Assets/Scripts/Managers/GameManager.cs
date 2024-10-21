@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     }
     private void OnEnable()
     {
+        // 씬 재로드마다 호출
         SceneManager.sceneLoaded += FindGameScene;
     }
     private void Start()
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         if (isGameOver) return;
-        
+
         isGameOver = true;
         Time.timeScale = 0.0f;
         Debug.Log("GameOver");
@@ -54,10 +55,11 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         isGameOver = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // 현재 씬을 재로드
     }
     public void FindGameScene(Scene scene, LoadSceneMode mode)
     {
+        // 씬 재로드 시에 씬 종류에 따라 다른 이벤트 호출
         switch (scene.name)
         {
             case "TitleScene":
@@ -67,6 +69,7 @@ public class GameManager : MonoBehaviour
             case "MainScene":
                 OnGameStart?.Invoke();
                 Debug.Log("OnStart");
+                // 메인 씬인 경우 재생성된 플레이어로 바인딩
                 Player = GameObject.FindGameObjectWithTag(playerTag);
                 break;
 
@@ -74,7 +77,6 @@ public class GameManager : MonoBehaviour
     }
     public void StartGame()
     {
-
 
         string sceneName = "MainScene";
         SceneManager.LoadScene(sceneName);
