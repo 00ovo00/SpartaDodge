@@ -255,11 +255,11 @@ PrefabInstance:
       objectReference: {fileID: 8058344544966557577, guid: fc029adf718aff9408982c713e765c86, type: 3}
     - target: {fileID: 987114388034667566, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
       propertyPath: spawnInpos.Array.data[0].killCount
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 987114388034667566, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
       propertyPath: spawnInpos.Array.data[1].killCount
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3731531095267403115, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
       propertyPath: m_Name
