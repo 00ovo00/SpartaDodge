@@ -52,6 +52,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySFX(string poolTag, AudioClip clip)
     {
+        // 효과음은 오브젝트 풀링하여 관리
         GameObject audioObject = objectPool.SpawnFromPool(poolTag);
 
         if (audioObject != null)
@@ -65,7 +66,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    // 이벤트 함수로 등록
+    // 다양한 게임 이벤트에 맞춰 사운드를 재생하는 함수
     private void PlayTitleBGM() => PlayBGM(titleBGM);
     private void PlayPlayBGM() => PlayBGM(playBGM);
     private void PlayGameOverBGM() => PlayBGM(gameOverBGM);
@@ -75,6 +76,8 @@ public class SoundManager : MonoBehaviour
 
     public void ReSetBinding(Scene scene, LoadSceneMode mode)
     {
+        // 씬이 재로드마다 실행
+        // 플레이어와 체력 시스템을 찾고, 사운드 재생을 위한 이벤트 바인딩
         if (scene.name != "TitleScene")
         {
             playerInputController = FindObjectOfType<PlayerInputController>();

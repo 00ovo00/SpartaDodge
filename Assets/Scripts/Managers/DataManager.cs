@@ -65,6 +65,7 @@ public class DataManager : MonoBehaviour
     }
     public void ResetData(Scene scene, LoadSceneMode mode)
     {
+        // 씬 로드될 때마다 데이터 리셋, UI 바인딩 
         killCount = 0;
         currentScore = 0.0f;
         playerInfoUI = FindObjectOfType<PlayerInfoUI>();

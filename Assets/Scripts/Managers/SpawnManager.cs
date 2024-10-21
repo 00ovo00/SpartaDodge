@@ -25,14 +25,12 @@ public class SpawnManager : MonoBehaviour
         }
 
         Instance = this;
-
-
     }
     [System.Serializable]
     public class SpawnInfo    // 몬스터 스폰 정보 저장 클래스
 
     {
-        public int killCount;
+        public int killCount;   // 스폰을 위한 킬 카운트 조건
         public string tag;     // 몬스터 태그
         public GameObject prefab;  // 몬스터 프리팹
         public int size;       // 생성할 몬스터의 수
@@ -50,15 +48,11 @@ public class SpawnManager : MonoBehaviour
         // 처치 수 변화에 따른 스폰 핸들러 등록
         DataManager.Instance.OnKillCountChanged += SpawnHandlerByKillCount;
         UpdateArray(); // 풀 이름 리스트 업데이트
-
-
-
     }
 
     private void Update()
     {
         SpawnTimeChecker(); // 스폰 시간 체크
-
     }
 
     public void SpawnTimeChecker()
@@ -67,8 +61,7 @@ public class SpawnManager : MonoBehaviour
 
         if (lastSpawnTime < spawnTime) return; // 스폰 주기 미충족 시 종료
 
-        Spawn();
-
+        Spawn();    // 몬스터 스폰
 
         lastSpawnTime = 0f; // 마지막 스폰 시간 초기화
 
@@ -119,7 +112,4 @@ public class SpawnManager : MonoBehaviour
         poolNameList = monsterObjectPool.GetPoolNameList(); // 현재 이름 리스트 가져오기 from MonsterObjectPool
 
     }
-
-
-
 }

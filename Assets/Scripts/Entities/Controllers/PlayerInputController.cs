@@ -48,7 +48,5 @@ public class PlayerInputController : TopDownController
     public void CallAttack()
     {
         OnPlayerAttack?.Invoke();
-
-
     }
 }

@@ -21,6 +21,7 @@ public class TopDownEnemyController : TopDownController
 
     protected virtual void FixedUpdate()
     {
+        // 적의 이동 업데이트 처리 (상속받은 클래스에서 구현)
     }
 
     protected float DistanceToTarget()
