@@ -10,17 +10,20 @@ public class TopDownAnimationController : AnimationController
     // StringToHash는 IsWalking이라는 문자열을 일방향 함수인 해쉬함수를 통해 특정한 값으로 변환
     private static readonly int IsWalking = Animator.StringToHash("IsWalking");
     private static readonly int IsHit = Animator.StringToHash("IsHit");
-
+    private static readonly int Dead = Animator.StringToHash("Dead");
     private static readonly int Attack = Animator.StringToHash("Attack");
+    private static readonly int IsInvincible = Animator.StringToHash("IsInvincible");
 
     private readonly float magnituteThreshold = 0.5f;   // 상태 변화에 필요한 최소값
 
     private HealthSystem healthSystem;
+    private SpriteRenderer spriteRenderer;
 
     protected override void Awake()
     {
         base.Awake();
         healthSystem = GetComponent<HealthSystem>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     void Start()
@@ -32,6 +35,7 @@ public class TopDownAnimationController : AnimationController
         if (healthSystem != null)
         {
             healthSystem.OnDamage += Hit;
+            healthSystem.OnInvincibilityStart += InvincibilityStart; 
             healthSystem.OnInvincibilityEnd += InvincibilityEnd;
         }
     }
@@ -48,15 +52,27 @@ public class TopDownAnimationController : AnimationController
         animator.SetTrigger(Attack);
     }
 
-    // 아직 피격부분은 없지만 곧 할 것이기 때문에 일단 둡니다.
     private void Hit()
     {
-        animator.SetBool(IsHit, true);
+        if (!animator.GetBool(IsInvincible))
+        {
+            animator.SetBool(IsHit, true);
+        }
     }
 
-    // 아직 피격부분은 없지만 곧 할 것이기 때문에 일단 둡니다.
+    private void Die()
+    {
+        animator.SetTrigger(Dead);
+    }
+    private void InvincibilityStart(float duration)
+    {
+        animator.SetBool(IsInvincible, true); 
+    }
+
+    // 무적 상태 종료
     private void InvincibilityEnd()
     {
+        animator.SetBool(IsInvincible, false);
         animator.SetBool(IsHit, false);
     }
 }

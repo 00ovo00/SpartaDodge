@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PlayerRangedAttack
   m_EditorClassIdentifier: 
   size: 1
-  delay: 0.15
-  power: 2
+  delay: 0.4
+  power: 1
   speed: 10
   target:
     serializedVersion: 2
@@ -28,3 +28,4 @@ MonoBehaviour:
   numberofProjectilesPerShot: 1
   multipleProjectilesAngel: 7
   projectileColor: {r: 1, g: 1, b: 1, a: 1}
+  particleSystem: {fileID: 1898277076439162154, guid: 2c7a5cfa1f427cb4c89b017ac819a125, type: 3}

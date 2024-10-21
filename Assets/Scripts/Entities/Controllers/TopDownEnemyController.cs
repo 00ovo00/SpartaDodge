@@ -15,16 +15,18 @@ public class TopDownEnemyController : TopDownController
     protected virtual void Start()
     {
         gameManager = GameManager.Instance;
-        ClosestTarget = gameManager.Player;
+        ClosestTarget = gameManager.Player.transform;
+        Debug.Log(gameManager.Player);
     }
 
     protected virtual void FixedUpdate()
     {
+        // 적의 이동 업데이트 처리 (상속받은 클래스에서 구현)
     }
 
     protected float DistanceToTarget()
     {
-        return Vector3.Distance(transform.position, ClosestTarget.position);
+        return Vector2.Distance(transform.position, ClosestTarget.position);
     }
 
     protected Vector2 DirectionToTarget()

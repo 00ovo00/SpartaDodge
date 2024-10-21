@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    Rigidbody2D rigidbody;
+    Rigidbody2D r2bd;
 
     [SerializeField]
     private float speed;
@@ -12,7 +12,7 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         // Rigidbody2D 캐싱
-        rigidbody = GetComponent<Rigidbody2D>();
+        r2bd = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -27,6 +27,6 @@ public class InputManager : MonoBehaviour
         direction = direction.normalized;
 
         // rigidbody.velocity는 해당 물체가 1초당 움직이는 거리
-        rigidbody.velocity = direction * speed;
+        r2bd.velocity = direction * speed;
     }
 }

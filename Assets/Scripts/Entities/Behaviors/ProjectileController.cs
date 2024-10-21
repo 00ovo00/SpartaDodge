@@ -2,15 +2,14 @@ using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
 {
-    // 벽에 부딪혔을 때 사라지면서 이펙트 나오게 해야돼서 레이어를 알고 있어야 함!
-    [SerializeField] private LayerMask levelCollisionLayer;
+    [SerializeField] private LayerMask levelCollisionLayer; // 충돌한 레이어(벽)
 
     private RangedAttackSO attackData;
     private float currentDuration;
     private Vector2 direction;
     private bool isReady;   // 공격 준비가 완료되었는지 체크
 
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D r2bd;
     private SpriteRenderer spriteRenderer;
     private TrailRenderer trailRenderer;
 
@@ -19,25 +18,23 @@ public class ProjectileController : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        rigidbody = GetComponent<Rigidbody2D>();
+        r2bd = GetComponent<Rigidbody2D>();
         trailRenderer = GetComponent<TrailRenderer>();
     }
 
     private void Update()
     {
-        if (!isReady)
-        {
-            return;
-        }
+        if (!isReady) return; // 준비되지 않았으면 동작하지 않음
 
-        currentDuration += Time.deltaTime;
+        currentDuration += Time.deltaTime;  
 
+        // 발사체의 현재 지속시간이 설정된 지속시간보다 크면
         if (currentDuration > attackData.duration)
         {
-            DestroyProjectile(transform.position, false);
+            DestroyProjectile(transform.position, false);   // 발사체 없애기
         }
 
-        rigidbody.velocity = direction * attackData.speed;
+        r2bd.velocity = direction * attackData.speed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -108,7 +105,14 @@ public class ProjectileController : MonoBehaviour
     {
         if (createFx)
         {
-            // TODO : ParticleSystem에 대해서 배우고, 무기 NameTag로 해당하는 FX가져오기
+            if (createFx && attackData != null && attackData.particleSystem != null)
+            {
+                // 파티클 시스템을 인스턴스화하고 위치 설정
+                ParticleSystem instantiatedFx = Instantiate(attackData.particleSystem, position, Quaternion.identity);
+                instantiatedFx.Play(); // 파티클 재생
+                Destroy(instantiatedFx.gameObject, instantiatedFx.main.duration); // 파티클이 재생된 후 삭제
+            }
+            gameObject.SetActive(false); // 투사체 비활성화
         }
         gameObject.SetActive(false);
     }
