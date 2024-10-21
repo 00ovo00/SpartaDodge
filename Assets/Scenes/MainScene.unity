@@ -339,7 +339,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8254396926888051169, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
       propertyPath: Pools.Array.data[1].size
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8254396926888051169, guid: 14bfc7528414ab649b739622f5c26755, type: 3}
       propertyPath: Pools.Array.data[2].size
