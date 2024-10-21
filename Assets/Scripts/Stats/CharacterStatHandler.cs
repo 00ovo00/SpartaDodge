@@ -13,9 +13,15 @@ public class CharacterStatHandler : MonoBehaviour
     public CharacterStat CurrentStat { get; private set; }
     public List<CharacterStat> statsModifiers = new List<CharacterStat>();
 
+    public BuffAnim speedBuffAnim;
+
     private void Awake()
     {
         UpdateCharacterStat();
+        if (speedBuffAnim != null)
+        {
+            speedBuffAnim.gameObject.SetActive(false); 
+        }
     }
     private void Update()
     {
@@ -69,10 +75,18 @@ public class CharacterStatHandler : MonoBehaviour
         CurrentStat.speed = Mathf.Clamp(newSpeed, 0, maxSpeed);
         speedBoostDuration = duration;
         isSpeedBoostActive = true;
+        if (speedBuffAnim != null)
+        {
+            speedBuffAnim.StartBuff(duration); 
+        }
     }
     private void ResetSpeed()
     {
         CurrentStat.speed = baseStats.speed;
         isSpeedBoostActive = false;
+        if (speedBuffAnim != null)
+        {
+            speedBuffAnim.StopBuff();
+        }
     }
 }
