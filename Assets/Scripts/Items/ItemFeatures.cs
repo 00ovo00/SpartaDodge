@@ -5,10 +5,11 @@ public class ItemFeatures : MonoBehaviour
 {
     private ItemSO itemData;
     private SpriteRenderer spriteRenderer;
-
+    private PlayerInfoUI playerInfoUI;
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        playerInfoUI = FindObjectOfType<PlayerInfoUI>();
     }
 
     public void SetItem(ItemSO item)
@@ -40,6 +41,7 @@ public class ItemFeatures : MonoBehaviour
         {
             case ItemType.HealthRecovery:
                 healthSystem.Heal(item.effectIncreaseAmount);
+                playerInfoUI.UpdateHealth(healthSystem.CurrentHealth, healthSystem.MaxHealth);
                 break;
 
             case ItemType.SpeedBoost:
