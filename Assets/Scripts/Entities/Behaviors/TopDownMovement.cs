@@ -12,7 +12,6 @@ public class TopDownMovement : MonoBehaviour
     // 실제로 이동이 일어나는 실행 주체 역할
 
     private Vector2 movementDirection = Vector2.zero;
-
     private Vector2 knockback = Vector2.zero;
     private float knockbackDuration  = 0.0f;
 

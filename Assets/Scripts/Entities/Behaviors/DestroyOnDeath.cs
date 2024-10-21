@@ -15,12 +15,11 @@ public class DestroyOnDeath : MonoBehaviour
 
     void OnDeath()
     {
-        // 멈추도록 수정       
-        gameObject.SetActive(false);
-
+        // 적 객체 비활성화
+        gameObject.SetActive(false);    
         // 킬카운트 증가
         DataManager.Instance.IncrementKillCount();
-        //// 적의 위치에서 아이템 드랍
+        // 적의 위치에서 아이템 드랍
         itemDropManager.DropItem(transform.position); 
     }
 }

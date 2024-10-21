@@ -52,7 +52,6 @@ public class TopDownAnimationController : AnimationController
         animator.SetTrigger(Attack);
     }
 
-    // 아직 피격부분은 없지만 곧 할 것이기 때문에 일단 둡니다.
     private void Hit()
     {
         if (!animator.GetBool(IsInvincible))
@@ -75,8 +74,5 @@ public class TopDownAnimationController : AnimationController
     {
         animator.SetBool(IsInvincible, false);
         animator.SetBool(IsHit, false);
-
-
-
     }
 }
