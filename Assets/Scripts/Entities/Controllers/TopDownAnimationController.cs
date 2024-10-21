@@ -11,17 +11,18 @@ public class TopDownAnimationController : AnimationController
     private static readonly int IsWalking = Animator.StringToHash("IsWalking");
     private static readonly int IsHit = Animator.StringToHash("IsHit");
     private static readonly int Dead = Animator.StringToHash("Dead");
-
     private static readonly int Attack = Animator.StringToHash("Attack");
 
     private readonly float magnituteThreshold = 0.5f;   // 상태 변화에 필요한 최소값
 
     private HealthSystem healthSystem;
+    private SpriteRenderer spriteRenderer;
 
     protected override void Awake()
     {
         base.Awake();
         healthSystem = GetComponent<HealthSystem>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     void Start()
@@ -55,14 +56,37 @@ public class TopDownAnimationController : AnimationController
         animator.SetBool(IsHit, true);
     }
 
-    // 아직 피격부분은 없지만 곧 할 것이기 때문에 일단 둡니다.
-    private void InvincibilityEnd()
-    {
-        animator.SetBool(IsHit, false);
-    }
-
     private void Die()
     {
         animator.SetTrigger(Dead);
     }
+    private void InvincibilityEnd()
+    {
+        animator.SetBool(IsHit, false);
+        StopCoroutine(InvincibilityEffectAnimation(10f));
+        spriteRenderer.color = Color.white;
+    }
+    public void StartInvincibilityEffectAnimation(float duration)
+    {
+        StartCoroutine(InvincibilityEffectAnimation(duration));  // 무적 애니메이션 시작
+    }
+    private IEnumerator InvincibilityEffectAnimation(float duration)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            float t = Mathf.PingPong(elapsedTime, 1f);
+            spriteRenderer.color = Color.Lerp(Color.red, Color.blue, t);
+
+            yield return null;
+        }
+
+        spriteRenderer.color = Color.white;
+    }
+
+
+
 }

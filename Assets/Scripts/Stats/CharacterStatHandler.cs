@@ -5,6 +5,8 @@ using System.Collections;
 public class CharacterStatHandler : MonoBehaviour
 {
     private float maxSpeed = 20.0f;
+    private float speedBoostDuration = 0f; 
+    private bool isSpeedBoostActive = false;
 
     // 기본 스탯과 버프 스탯들의 능력치를 종합해서 스탯을 계산하는 컴포넌트
     [SerializeField] private CharacterStat baseStats;
@@ -14,6 +16,17 @@ public class CharacterStatHandler : MonoBehaviour
     private void Awake()
     {
         UpdateCharacterStat();
+    }
+    private void Update()
+    {
+        if (isSpeedBoostActive)
+        {
+            speedBoostDuration -= Time.deltaTime;
+            if (speedBoostDuration <= 0f)
+            {
+                ResetSpeed();
+            }
+        }
     }
 
     public void AddStatModifier(CharacterStat modifier)
@@ -48,19 +61,18 @@ public class CharacterStatHandler : MonoBehaviour
                     CurrentStat.speed = modifier.speed;
                     break;
             }
-            CurrentStat.speed = (CurrentStat.speed > maxSpeed) ? maxSpeed : CurrentStat.speed;
         }
     }
 
-    public void ActivateInvincibility(float duration)
+    public void OverrideSpeed(float newSpeed, float duration)
     {
-        StartCoroutine(CountdownInvincibility(duration));
+        CurrentStat.speed = Mathf.Clamp(newSpeed, 0, maxSpeed);
+        speedBoostDuration = duration;
+        isSpeedBoostActive = true;
     }
-
-    private IEnumerator CountdownInvincibility(float duration)
+    private void ResetSpeed()
     {
-        Debug.Log("무적시작");
-        yield return new WaitForSeconds(duration);
-        Debug.Log("무적끝");
+        CurrentStat.speed = baseStats.speed;
+        isSpeedBoostActive = false;
     }
 }

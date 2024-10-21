@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,15 +7,14 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class PlayerInputController : TopDownController
 {
     private Camera _camera;
-    //private void Awake()
-    //{
-    //    Debug.Log(this.GetType().Name + ": " + MethodBase.GetCurrentMethod().Name);
-    //    _camera = Camera.main;  // 메인 카메라 가져오기
-    //}
+
+    public event Action OnPlayerAttack;
+
     protected override void Awake()
     {
         base.Awake();   // 부모의 Awake도 실행
         _camera = Camera.main;  // 메인 카메라 가져오기
+        GameManager.Instance.playerHealthSystem = this.GetComponent<HealthSystem>();
     }
 
     // OnXXX 메소드는 사용자 입력 데이터를 정규화 등의 전처리 마치고
@@ -42,5 +42,13 @@ public class PlayerInputController : TopDownController
     {
         // 마우스 좌클릭 이벤트 발생하면 공격중인 상태로 변경
         IsAttacking = value.isPressed;
+        
+    }
+
+    public void CallAttack()
+    {
+        OnPlayerAttack?.Invoke();
+
+
     }
 }

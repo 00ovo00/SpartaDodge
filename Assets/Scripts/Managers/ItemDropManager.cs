@@ -11,6 +11,7 @@ public class ItemDropManager : MonoBehaviour
     {
         if (Random.value <= dropChance) // 드랍 조건 여기서 변경
         {
+            Debug.Log("아이템이 떨어졌습니다.");
             // 랜덤 아이템 선택
             int randomIndex = Random.Range(0, droppableItems.Length);
             ItemSO droppedItem = droppableItems[randomIndex];

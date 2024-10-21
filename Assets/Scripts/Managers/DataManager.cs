@@ -1,13 +1,17 @@
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
-
-    private PlayerInfoUI playerInfoUI;
+    public PlayerInfoUI playerInfoUI;
+    public event Action<int> OnKillCountChanged;
+    public static event Action OnEnemyDeath;
 
     private int killCount = 0;
-    private float score = 0.0f;
+    private float currentScore = 0.0f;
+    private float bestScore = 0.0f;
 
     private void Awake()
     {
@@ -22,25 +26,45 @@ public class DataManager : MonoBehaviour
 
         playerInfoUI = FindObjectOfType<PlayerInfoUI>();
     }
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += ResetData;
+    }
 
     public void IncrementKillCount()
     {
         killCount++;
         Debug.Log($"KillCount: {killCount}");
+        OnKillCountChanged?.Invoke(killCount);
+        OnEnemyDeath?.Invoke();
     }
 
     public int GetKillCount()
     {
         return killCount;
     }
-    public void IncrementScore(float maxHp)
+    public void IncrementScore(float score)
     {
-        score += maxHp * 0.5f;
-        playerInfoUI.UpdateScore(score);
+        currentScore += score;
+        playerInfoUI.UpdateScore(currentScore);
     }
 
     public float GetScore()
     {
-        return score;
+        return currentScore;
+    }
+    public float GetBestScore()
+    {
+        return bestScore;
+    }
+    public void SetBestScore(float newBestScore)
+    {
+        bestScore = newBestScore;
+    }
+    public void ResetData(Scene scene, LoadSceneMode mode)
+    {
+        killCount = 0;
+        currentScore = 0.0f;
+        playerInfoUI = FindObjectOfType<PlayerInfoUI>();
     }
 }
