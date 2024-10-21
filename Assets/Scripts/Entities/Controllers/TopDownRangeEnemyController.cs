@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class TopDownRangeEnemyController : TopDownEnemyController
 {
-    [SerializeField] private float followRange = 15f;
-    [SerializeField] private float shootRange = 10f;
-    private int layerMaskLevel;
-    private int layerMaskTarget;
+    [SerializeField] private float followRange = 15f;   // 추적 범위
+    [SerializeField] private float shootRange = 10f;    // 공격 범위
+    private int layerMaskLevel;     // 벽 충돌 레이어
+    private int layerMaskTarget;    // 타겟 충돌 레이어
 
     protected override void Start()
     {
@@ -28,6 +28,7 @@ public class TopDownRangeEnemyController : TopDownEnemyController
     {
         IsAttacking = false; // 기본적으로 공격 상태를 false로 설정
 
+        // 추적범위 내에 있으면 근처에 있는지 확인
         if (distance <= followRange)
         {
             CheckIfNear(distance, direction);
@@ -36,13 +37,15 @@ public class TopDownRangeEnemyController : TopDownEnemyController
 
     private void CheckIfNear(float distance, Vector2 direction)
     {
+        // 타겟이 공격 범위 내에 있으면 공격
         if (distance <= shootRange)
         {
             TryShootAtTarget(direction);
         }
+        // 타겟이 공격 범위 외에 있고 추적 범위 내에 있으면 추격
         else
         {
-            CallMoveEvent(direction); // 사정거리 밖이지만 추적 범위 내에 있을 경우, 타겟 쪽으로 이동
+            CallMoveEvent(direction);
         }
     }
 
@@ -58,7 +61,7 @@ public class TopDownRangeEnemyController : TopDownEnemyController
         }
         else
         {
-            CallMoveEvent(direction);
+            CallMoveEvent(direction);// 타겟을 맞추지 못하면 추격
         }
     }
 

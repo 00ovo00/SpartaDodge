@@ -22,6 +22,7 @@ public class ItemFeatures : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // 충돌 대상이 플레이어면 아이템 효과 적용 후 파괴
         if (other.CompareTag("Player"))
         {
             CharacterStatHandler statHandler = other.GetComponent<CharacterStatHandler>();
@@ -48,7 +49,6 @@ public class ItemFeatures : MonoBehaviour
             case ItemType.Invincibility:
                 healthSystem.Invincibility(item.duration);
                 break;
-
         }
     }
 }

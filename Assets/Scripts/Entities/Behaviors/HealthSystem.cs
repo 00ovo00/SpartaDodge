@@ -11,6 +11,8 @@ public class HealthSystem : MonoBehaviour
     private CharacterStatHandler statsHandler;
     private float timeSinceLastChange = float.MaxValue; // 마지막 공격을 받고 경과한 시간
     private bool isAttacked = false;
+    private bool isInvincible = false;
+
     private BoxCollider2D boxcollider;
     private Rigidbody2D rb;
 
@@ -22,7 +24,6 @@ public class HealthSystem : MonoBehaviour
     public event Action OnDeath;
     public event Action<float> OnInvincibilityStart;
     public event Action OnInvincibilityEnd;
-    private bool isInvincible = false;
     public event Action OnGameOver;
 
     public float CurrentHealth { get; private set; }
@@ -51,13 +52,15 @@ public class HealthSystem : MonoBehaviour
 
     private void Update()
     {
+        // 공격받은 상태이고 무적 시간이면
         if (isAttacked && timeSinceLastChange < healthChangeDelay)
         {
             timeSinceLastChange += Time.deltaTime;
+            // 무적 시간이 지나면
             if (timeSinceLastChange >= healthChangeDelay)
             {
-                OnInvincibilityEnd?.Invoke();
-                isAttacked = false;
+                OnInvincibilityEnd?.Invoke();   // 무적 상태 종료 이벤트 호출
+                isAttacked = false; // 피격 가능한 상태로 변경
             }
         }
     }
@@ -73,6 +76,7 @@ public class HealthSystem : MonoBehaviour
 
     public bool ChangeHealth(float change)
     {
+        // 무적 상태거나 무적 시간이 끝나지 않았다면 체력 변동 무효화
         if (isInvincible || timeSinceLastChange < healthChangeDelay)
             return false;
 
@@ -100,16 +104,17 @@ public class HealthSystem : MonoBehaviour
             CallDeath();
             return true;
         }
-
+        // 변동값이 양수면 힐 이벤트 호출
         if (change >= 0)
         {
             OnHeal?.Invoke();
             Debug.Log("데미지입음");
         }
+        // 변동값이 음수면 데미지 이벤트 호출
         else
         {
             OnDamage?.Invoke();
-            isAttacked = true;
+            isAttacked = true;  // 피격 상태로 변경
         }
         return true;
     }
@@ -155,7 +160,4 @@ public class HealthSystem : MonoBehaviour
         isInvincible = false;
         OnInvincibilityEnd?.Invoke();
     }
-
-
-
 }
