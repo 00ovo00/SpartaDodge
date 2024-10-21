@@ -12,6 +12,7 @@ public class TopDownAnimationController : AnimationController
     private static readonly int IsHit = Animator.StringToHash("IsHit");
     private static readonly int Dead = Animator.StringToHash("Dead");
     private static readonly int Attack = Animator.StringToHash("Attack");
+    private static readonly int IsInvincible = Animator.StringToHash("IsInvincible");
 
     private readonly float magnituteThreshold = 0.5f;   // 상태 변화에 필요한 최소값
 
@@ -34,6 +35,7 @@ public class TopDownAnimationController : AnimationController
         if (healthSystem != null)
         {
             healthSystem.OnDamage += Hit;
+            healthSystem.OnInvincibilityStart += InvincibilityStart; 
             healthSystem.OnInvincibilityEnd += InvincibilityEnd;
         }
     }
@@ -53,40 +55,28 @@ public class TopDownAnimationController : AnimationController
     // 아직 피격부분은 없지만 곧 할 것이기 때문에 일단 둡니다.
     private void Hit()
     {
-        animator.SetBool(IsHit, true);
+        if (!animator.GetBool(IsInvincible))
+        {
+            animator.SetBool(IsHit, true);
+        }
     }
 
     private void Die()
     {
         animator.SetTrigger(Dead);
     }
+    private void InvincibilityStart(float duration)
+    {
+        animator.SetBool(IsInvincible, true); 
+    }
+
+    // 무적 상태 종료
     private void InvincibilityEnd()
     {
+        animator.SetBool(IsInvincible, false);
         animator.SetBool(IsHit, false);
-        StopCoroutine(InvincibilityEffectAnimation(10f));
-        spriteRenderer.color = Color.white;
+
+
+
     }
-    public void StartInvincibilityEffectAnimation(float duration)
-    {
-        StartCoroutine(InvincibilityEffectAnimation(duration));  // 무적 애니메이션 시작
-    }
-    private IEnumerator InvincibilityEffectAnimation(float duration)
-    {
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-
-            float t = Mathf.PingPong(elapsedTime, 1f);
-            spriteRenderer.color = Color.Lerp(Color.red, Color.blue, t);
-
-            yield return null;
-        }
-
-        spriteRenderer.color = Color.white;
-    }
-
-
-
 }

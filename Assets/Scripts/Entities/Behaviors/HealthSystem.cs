@@ -147,17 +147,11 @@ public class HealthSystem : MonoBehaviour
             isInvincible = true;
             OnInvincibilityStart?.Invoke(duration);
 
-            if (animationController != null)
-            {
-                animationController.StartInvincibilityEffectAnimation(duration);
-            }
-
-            StartCoroutine(DisableInvincibility(duration));
+            Invoke(nameof(DisableInvincibility), duration);
         }
     }
-    private IEnumerator DisableInvincibility(float duration)
+    private void DisableInvincibility()
     {
-        yield return new WaitForSeconds(duration);
         isInvincible = false;
         OnInvincibilityEnd?.Invoke();
     }
