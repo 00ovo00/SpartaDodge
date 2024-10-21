@@ -55,11 +55,13 @@ public class DataManager : MonoBehaviour
     }
     public float GetBestScore()
     {
+        bestScore = PlayerPrefs.GetFloat("BestScore");
         return bestScore;
     }
     public void SetBestScore(float newBestScore)
     {
         bestScore = newBestScore;
+        PlayerPrefs.SetFloat("BestScore", bestScore);
     }
     public void ResetData(Scene scene, LoadSceneMode mode)
     {
